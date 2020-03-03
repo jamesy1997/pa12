@@ -3,9 +3,12 @@ package es.udc.paproject.backend.model.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 public class Session {
 
@@ -37,6 +40,8 @@ public class Session {
 		this.id = id;
 	}
 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "movieId")
 	public Movie getMovie() {
 		return movie;
 	}
@@ -45,6 +50,8 @@ public class Session {
 		this.movie = movie;
 	}
 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "roomId")
 	public Room getRoom() {
 		return room;
 	}

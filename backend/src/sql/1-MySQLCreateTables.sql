@@ -70,9 +70,9 @@ CREATE TABLE Session (
 
 CREATE TABLE Purchase (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	sessionId BIGINT, 
+	sessionId BIGINT NOT NULL, 
 	ticket BIGINT NOT NULL, 
-	userId BIGINT, 
+	userId BIGINT NOT NULL, 
 	date DATETIME NOT NULL, 
 	pickedUp BOOLEAN NOT NULL,
 	creditCard BIGINT NOT NULL,

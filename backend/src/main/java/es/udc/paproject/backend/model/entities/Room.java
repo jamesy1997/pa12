@@ -1,8 +1,11 @@
 package es.udc.paproject.backend.model.entities;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 public class Room {
 
@@ -48,6 +51,8 @@ public class Room {
 		this.capacity = capacity;
 	}
 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cinemaId")
 	public Cinema getCinema() {
 		return cinema;
 	}

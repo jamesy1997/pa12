@@ -2,9 +2,12 @@ package es.udc.paproject.backend.model.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 public class Purchase {
 
@@ -14,6 +17,7 @@ public class Purchase {
 	private int creditCard;
 	private LocalDateTime date;
 	private boolean pickedUp;
+	private User user;
 
 	public Purchase() {
 	}
@@ -38,6 +42,8 @@ public class Purchase {
 		this.id = id;
 	}
 
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "sessionId")
 	public Session getSession() {
 		return session;
 	}
@@ -76,6 +82,16 @@ public class Purchase {
 
 	public void setPickedUp(boolean pickedUp) {
 		this.pickedUp = pickedUp;
+	}
+
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
