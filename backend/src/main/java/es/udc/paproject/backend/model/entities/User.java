@@ -7,8 +7,10 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-	
-	public enum RoleType {USER};
+
+	public enum RoleType {
+		TICKETOFFICER, SPECTATOR
+	};
 
 	private Long id;
 	private String userName;
@@ -18,7 +20,8 @@ public class User {
 	private String email;
 	private RoleType role;
 
-	public User() {}
+	public User() {
+	}
 
 	public User(String userName, String password, String firstName, String lastName, String email) {
 
@@ -27,7 +30,7 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		
+
 	}
 
 	@Id
