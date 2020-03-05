@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import es.udc.paproject.backend.model.entities.City;
 import es.udc.paproject.backend.model.entities.CityDao;
 import es.udc.paproject.backend.model.entities.Movie;
 import es.udc.paproject.backend.model.entities.MovieDao;
+import es.udc.paproject.backend.model.entities.Purchase;
 import es.udc.paproject.backend.model.entities.Room;
 import es.udc.paproject.backend.model.entities.RoomDao;
 import es.udc.paproject.backend.model.entities.Session;
@@ -29,6 +32,7 @@ import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NotEnoughTicketsException;
 import es.udc.paproject.backend.model.exceptions.PermissionRoleException;
+import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.ShoppingManagementService;
 import es.udc.paproject.backend.model.services.UserService;
 
@@ -130,4 +134,36 @@ public class ShoppingManagementServiceTest {
 				() -> shoppingManagementService.buyTickets(session3, -4, 123456789, user3.getId()));
 	}
 
+	@Test
+	public void showNoPurchasesTest() throws InstanceNotFoundException, PermissionRoleException {
+		User user = signUpUser("user");
+		Block<Purchase> expectedPurchases = new Block<>(new ArrayList<>(), false);
+
+		assertEquals(expectedPurchases, shoppingManagementService.showPurchases(user.getId(), 0, 1));
+
+	}
+
+	@Test
+	public void showPurchasesTest() throws InstanceNotFoundException, PermissionRoleException,
+			ExpiratedSessionException, NotEnoughTicketsException {
+		LocalDateTime date1 = LocalDateTime.of(2021, 03, 03, 11, 25);
+		City city1 = new City("City1");
+		cityDao.save(city1);
+		Cinema cinema1 = new Cinema("cinema1", city1);
+		cinemaDao.save(cinema1);
+		Room room1 = new Room("room1", 100, cinema1);
+		roomDao.save(room1);
+		Movie movie1 = new Movie("movie1", "summary", 120);
+		movieDao.save(movie1);
+		User user1 = signUpUser("user1");
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
+		sessionDao.save(session1);
+
+		Purchase purchase = shoppingManagementService.buyTickets(session1, 10, 12345, user1.getId());
+		Purchase purchase2 = shoppingManagementService.buyTickets(session1, 10, 12345, user1.getId());
+
+		Block<Purchase> expectedBlock = new Block<>(Arrays.asList(purchase, purchase2), false);
+		assertEquals(expectedBlock, shoppingManagementService.showPurchases(user1.getId(), 0, 2));
+
+	}
 }

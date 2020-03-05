@@ -3,6 +3,8 @@ package es.udc.paproject.backend.model.services;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,7 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	private PurchaseDao purchaseDao;
 
 	@Override
-	public Long buyTickets(Session session, Integer tickets, Integer creditCard, Long userId)
+	public Purchase buyTickets(Session session, Integer tickets, Integer creditCard, Long userId)
 			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
 			NotEnoughTicketsException {
 
@@ -50,7 +52,18 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		Purchase purchase = new Purchase(session, tickets, creditCard, LocalDateTime.now(), false, user);
 		session.getRoom().setCapacity(session.getRoom().getCapacity() - tickets);
 		purchase = purchaseDao.save(purchase);
-		return purchase.getId();
+		return purchase;
+
+	}
+
+	@Override
+	public Block<Purchase> showPurchases(Long userId, int page, int size)
+			throws InstanceNotFoundException, PermissionRoleException {
+
+		permissionChecker.checkSpectator(userId);
+		Slice<Purchase> slice = purchaseDao.findByUserIdOrderByDateAsc(userId, PageRequest.of(page, size));
+
+		return new Block<>(slice.getContent(), slice.hasNext());
 
 	}
 
