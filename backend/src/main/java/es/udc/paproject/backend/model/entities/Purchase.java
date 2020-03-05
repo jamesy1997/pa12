@@ -2,6 +2,7 @@ package es.udc.paproject.backend.model.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Purchase {
 
 	private Long id;
 	private Session session;
-	private int ticket;
-	private int creditCard;
+	private Integer ticket;
+	private Integer creditCard;
 	private LocalDateTime date;
 	private boolean pickedUp;
 	private User user;
@@ -22,14 +24,15 @@ public class Purchase {
 	public Purchase() {
 	}
 
-	public Purchase(Long id, Session session, int ticket, int creditCard, LocalDateTime date, boolean pickedUp) {
-		super();
-		this.id = id;
+	public Purchase(Session session, Integer ticket, Integer creditCard, LocalDateTime date, boolean pickedUp,
+			User user) {
+
 		this.session = session;
 		this.ticket = ticket;
 		this.creditCard = creditCard;
 		this.date = date;
 		this.pickedUp = pickedUp;
+		this.user = user;
 	}
 
 	@Id
@@ -52,7 +55,7 @@ public class Purchase {
 		this.session = session;
 	}
 
-	public int getTicket() {
+	public Integer getTicket() {
 		return ticket;
 	}
 
@@ -60,7 +63,7 @@ public class Purchase {
 		this.ticket = ticket;
 	}
 
-	public int getCreditCard() {
+	public Integer getCreditCard() {
 		return creditCard;
 	}
 

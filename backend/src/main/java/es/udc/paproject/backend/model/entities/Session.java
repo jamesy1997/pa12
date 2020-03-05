@@ -3,6 +3,7 @@ package es.udc.paproject.backend.model.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Session {
 
 	private Long id;
@@ -21,9 +23,8 @@ public class Session {
 	public Session() {
 	}
 
-	public Session(Long id, Movie movie, Room room, LocalDateTime date, BigDecimal price) {
-		super();
-		this.id = id;
+	public Session(Movie movie, Room room, LocalDateTime date, BigDecimal price) {
+
 		this.movie = movie;
 		this.room = room;
 		this.date = date;

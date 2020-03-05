@@ -2,10 +2,13 @@ package es.udc.paproject.backend.model.entities;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class City {
 
 	private Long id;
@@ -15,11 +18,9 @@ public class City {
 	public City() {
 	}
 
-	public City(Long id, String name, Set<Cinema> cinema) {
-		super();
-		this.id = id;
+	public City(String name) {
+
 		this.name = name;
-		this.cinema = cinema;
 	}
 
 	@Id
@@ -40,6 +41,7 @@ public class City {
 		this.name = name;
 	}
 
+	@OneToMany(mappedBy = "city")
 	public Set<Cinema> getCinema() {
 		return cinema;
 	}

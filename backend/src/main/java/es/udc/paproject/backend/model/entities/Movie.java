@@ -1,26 +1,28 @@
 package es.udc.paproject.backend.model.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Movie {
-	
+
 	private Long id;
 	private String title;
 	private String summary;
-	private int duration;
-	
-	public Movie() {}
-	
-	public Movie(Long id, String title, String summary, int duration) {
-		super();
-		this.id = id;
+	private Integer duration;
+
+	public Movie() {
+	}
+
+	public Movie(String title, String summary, Integer duration) {
+
 		this.title = title;
 		this.summary = summary;
 		this.duration = duration;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -47,12 +49,12 @@ public class Movie {
 		this.summary = summary;
 	}
 
-	public int getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
-	
+
 }

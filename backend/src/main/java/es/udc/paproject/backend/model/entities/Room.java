@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Room {
 
 	private Long id;
 	private String name;
-	private int capacity;
+	private Integer capacity;
 	private Cinema cinema;
 
 	public Room() {
 	}
 
-	public Room(Long id, String name, int capacity, Cinema cinema) {
-		super();
-		this.id = id;
+	public Room(String name, Integer capacity, Cinema cinema) {
+
 		this.name = name;
 		this.capacity = capacity;
 		this.cinema = cinema;
@@ -43,7 +44,7 @@ public class Room {
 		this.name = name;
 	}
 
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
