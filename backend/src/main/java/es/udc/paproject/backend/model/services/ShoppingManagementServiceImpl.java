@@ -1,6 +1,8 @@
 package es.udc.paproject.backend.model.services;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +17,10 @@ import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.entities.User;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.InvalidCreditCardException;
 import es.udc.paproject.backend.model.exceptions.NotEnoughTicketsException;
 import es.udc.paproject.backend.model.exceptions.PermissionRoleException;
+import es.udc.paproject.backend.model.exceptions.TicketsAlreadyPickedUpException;
 
 @Service
 @Transactional
@@ -65,6 +69,39 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 
 		return new Block<>(slice.getContent(), slice.hasNext());
 
+	}
+
+	@Override
+	public boolean deliverTickets(Long userId, Long purchaseId, Integer creditCard)
+			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
+			InvalidCreditCardException, TicketsAlreadyPickedUpException {
+
+		permissionChecker.checkTicketOfficer(userId);
+		Optional<Purchase> optPurchase;
+		Purchase purchase;
+		optPurchase = purchaseDao.findById(purchaseId);
+
+		try {
+			purchase = optPurchase.get();
+		} catch (NoSuchElementException e) {
+			throw new InstanceNotFoundException("Purchase not found with id: ", purchaseId);
+		}
+
+		if (purchase.getSession().getDate().isBefore(LocalDateTime.now())) {
+			throw new ExpiratedSessionException(purchase.getSession().getId());
+		}
+
+		if (purchase.getCreditCard() != creditCard) {
+			throw new InvalidCreditCardException(creditCard);
+		}
+
+		if (purchase.isPickedUp()) {
+			throw new TicketsAlreadyPickedUpException();
+		}
+
+		purchase.setPickedUp(true);
+		purchaseDao.save(purchase);
+		return true;
 	}
 
 }
