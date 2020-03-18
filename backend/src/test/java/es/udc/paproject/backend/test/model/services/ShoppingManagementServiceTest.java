@@ -139,6 +139,9 @@ public class ShoppingManagementServiceTest {
 
 		assertThrows(NotEnoughTicketsException.class,
 				() -> shoppingManagementService.buyTickets(session3, -4, 123456789, user3.getId()));
+
+		assertThrows(NotEnoughTicketsException.class,
+				() -> shoppingManagementService.buyTickets(session3, 11, 123456789, user3.getId()));
 	}
 
 	@Test

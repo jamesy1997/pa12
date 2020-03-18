@@ -49,7 +49,7 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 			throw new ExpiratedSessionException(session.getId());
 		}
 
-		if ((tickets < 1) || (tickets > session.getRoom().getCapacity())) {
+		if (((tickets < 1) || (tickets > 10)) || (tickets > session.getRoom().getCapacity())) {
 			throw new NotEnoughTicketsException(tickets);
 		}
 
