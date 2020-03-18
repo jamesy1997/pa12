@@ -19,7 +19,6 @@ import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.InvalidCreditCardException;
 import es.udc.paproject.backend.model.exceptions.NotEnoughTicketsException;
-import es.udc.paproject.backend.model.exceptions.PermissionRoleException;
 import es.udc.paproject.backend.model.exceptions.TicketsAlreadyPickedUpException;
 
 @Service
@@ -37,10 +36,9 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 
 	@Override
 	public Purchase buyTickets(Session session, Integer tickets, Integer creditCard, Long userId)
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
-			NotEnoughTicketsException {
+			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
 
-		User user = permissionChecker.checkSpectator(userId);
+		User user = permissionChecker.checkUser(userId);
 		if (!sessionDao.existsById(session.getId())) {
 			throw new InstanceNotFoundException("Session not found:", session);
 		}
@@ -57,14 +55,12 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		session.getRoom().setCapacity(session.getRoom().getCapacity() - tickets);
 		purchase = purchaseDao.save(purchase);
 		return purchase;
-
 	}
 
 	@Override
-	public Block<Purchase> showPurchases(Long userId, int page, int size)
-			throws InstanceNotFoundException, PermissionRoleException {
+	public Block<Purchase> showPurchases(Long userId, int page, int size) throws InstanceNotFoundException {
 
-		permissionChecker.checkSpectator(userId);
+		permissionChecker.checkUser(userId);
 		Slice<Purchase> slice = purchaseDao.findByUserIdOrderByDateAsc(userId, PageRequest.of(page, size));
 
 		return new Block<>(slice.getContent(), slice.hasNext());
@@ -72,11 +68,10 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	}
 
 	@Override
-	public boolean deliverTickets(Long userId, Long purchaseId, Integer creditCard)
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
-			InvalidCreditCardException, TicketsAlreadyPickedUpException {
+	public boolean deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
+			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException {
 
-		permissionChecker.checkTicketOfficer(userId);
+		permissionChecker.checkUser(userId);
 		Optional<Purchase> optPurchase;
 		Purchase purchase;
 		optPurchase = purchaseDao.findById(purchaseId);

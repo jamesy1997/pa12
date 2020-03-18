@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.paproject.backend.model.entities.User;
-import es.udc.paproject.backend.model.entities.User.RoleType;
 import es.udc.paproject.backend.model.entities.UserDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.PermissionRoleException;
 
 @Service
 @Transactional(readOnly = true)
@@ -40,29 +38,4 @@ public class PermissionCheckerImpl implements PermissionChecker {
 		return user.get();
 
 	}
-
-	@Override
-	public User checkSpectator(Long userId) throws PermissionRoleException, InstanceNotFoundException {
-
-		User user = checkUser(userId);
-		if (user.getRole() != RoleType.SPECTATOR) {
-			throw new PermissionRoleException(user.getRole());
-		}
-
-		return user;
-
-	}
-
-	@Override
-	public User checkTicketOfficer(Long userId) throws PermissionRoleException, InstanceNotFoundException {
-
-		User user = checkUser(userId);
-		if (user.getRole() != RoleType.TICKETOFFICER) {
-			throw new PermissionRoleException(user.getRole());
-		}
-
-		return user;
-
-	}
-
 }

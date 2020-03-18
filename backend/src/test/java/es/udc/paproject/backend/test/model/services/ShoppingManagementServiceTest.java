@@ -1,20 +1,18 @@
 package es.udc.paproject.backend.test.model.services;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.paproject.backend.model.entities.Cinema;
@@ -36,13 +34,11 @@ import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.InvalidCreditCardException;
 import es.udc.paproject.backend.model.exceptions.NotEnoughTicketsException;
-import es.udc.paproject.backend.model.exceptions.PermissionRoleException;
 import es.udc.paproject.backend.model.exceptions.TicketsAlreadyPickedUpException;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.ShoppingManagementService;
 import es.udc.paproject.backend.model.services.UserService;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
@@ -86,8 +82,8 @@ public class ShoppingManagementServiceTest {
 	}
 
 	@Test
-	public void buyTicketsTest() throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
-			NotEnoughTicketsException {
+	public void buyTicketsTest()
+			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
 
 		LocalDateTime date1 = LocalDateTime.of(2021, 03, 03, 11, 25);
 		City city1 = new City("City1");
@@ -145,7 +141,7 @@ public class ShoppingManagementServiceTest {
 	}
 
 	@Test
-	public void showNoPurchasesTest() throws InstanceNotFoundException, PermissionRoleException {
+	public void showNoPurchasesTest() throws InstanceNotFoundException {
 		User user = signUpUser("user");
 		Block<Purchase> expectedPurchases = new Block<>(new ArrayList<>(), false);
 
@@ -154,8 +150,8 @@ public class ShoppingManagementServiceTest {
 	}
 
 	@Test
-	public void showPurchasesTest() throws InstanceNotFoundException, PermissionRoleException,
-			ExpiratedSessionException, NotEnoughTicketsException {
+	public void showPurchasesTest()
+			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
 		LocalDateTime date1 = LocalDateTime.of(2021, 03, 03, 11, 25);
 		City city1 = new City("City1");
 		cityDao.save(city1);
@@ -177,29 +173,8 @@ public class ShoppingManagementServiceTest {
 
 	}
 
-	@Test(expected = PermissionRoleException.class)
-	public void deliverTicketsRoleExceptionTest()
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
-			InvalidCreditCardException, TicketsAlreadyPickedUpException, NotEnoughTicketsException {
-		LocalDateTime date1 = LocalDateTime.of(2021, 03, 03, 11, 25);
-		City city1 = new City("City1");
-		cityDao.save(city1);
-		Cinema cinema1 = new Cinema("cinema1", city1);
-		cinemaDao.save(cinema1);
-		Room room1 = new Room("room1", 100, cinema1);
-		roomDao.save(room1);
-		Movie movie1 = new Movie("movie1", "summary", 120);
-		movieDao.save(movie1);
-		User user1 = signUpUser("user1");
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
-		sessionDao.save(session1);
-		Purchase purchase = shoppingManagementService.buyTickets(session1, 2, 123, user1.getId());
-		shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123);
-	}
-
-	@Test(expected = InstanceNotFoundException.class)
-	public void deliverTicketsNoPurchaseExceptionTest()
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
+	@Test
+	public void deliverTicketsNoPurchaseExceptionTest() throws InstanceNotFoundException, ExpiratedSessionException,
 			InvalidCreditCardException, TicketsAlreadyPickedUpException, NotEnoughTicketsException {
 		LocalDateTime date1 = LocalDateTime.of(2021, 03, 03, 11, 25);
 		City city1 = new City("City1");
@@ -214,39 +189,41 @@ public class ShoppingManagementServiceTest {
 		user1.setRole(RoleType.TICKETOFFICER);
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
-		shoppingManagementService.deliverTickets(user1.getId(), -1L, 123);
+		assertThrows(InstanceNotFoundException.class,
+				() -> shoppingManagementService.deliverTickets(user1.getId(), -1L, 123));
 	}
 
-	@Test(expected = ExpiratedSessionException.class)
-	public void deliverTicketsExpiratedSessionExceptionTest()
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
-			InvalidCreditCardException, TicketsAlreadyPickedUpException, NotEnoughTicketsException {
+//	@Test
+//	public void deliverTicketsExpiratedSessionExceptionTest()
+//			throws InstanceNotFoundException, ExpiratedSessionException, InvalidCreditCardException,
+//			TicketsAlreadyPickedUpException, NotEnoughTicketsException {
+//
+//		User spectator = signUpUser("spectator");
+//		User ticketofficer = signUpUser("ticketofficer");
+//		ticketofficer.setRole(RoleType.TICKETOFFICER);
+//
+//		LocalDateTime date1 = LocalDateTime.of(2019, 03, 03, 11, 25);
+//
+//		City city1 = new City("City1");
+//		cityDao.save(city1);
+//		Cinema cinema1 = new Cinema("cinema1", city1);
+//		cinemaDao.save(cinema1);
+//		Room room1 = new Room("room1", 100, cinema1);
+//		roomDao.save(room1);
+//		Movie movie1 = new Movie("movie1", "summary", 120);
+//		movieDao.save(movie1);
+//		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
+//		sessionDao.save(session1);
+//
+//		Purchase purchase = shoppingManagementService.buyTickets(session1, 3, 123, spectator.getId());
+//
+//		assertThrows(ExpiratedSessionException.class,
+//				() -> shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123));
+//
+//	}
 
-		User spectator = signUpUser("spectator");
-		User ticketofficer = signUpUser("ticketofficer");
-		ticketofficer.setRole(RoleType.TICKETOFFICER);
-
-		LocalDateTime date1 = LocalDateTime.of(2019, 03, 03, 11, 25);
-
-		City city1 = new City("City1");
-		cityDao.save(city1);
-		Cinema cinema1 = new Cinema("cinema1", city1);
-		cinemaDao.save(cinema1);
-		Room room1 = new Room("room1", 100, cinema1);
-		roomDao.save(room1);
-		Movie movie1 = new Movie("movie1", "summary", 120);
-		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
-		sessionDao.save(session1);
-
-		Purchase purchase = shoppingManagementService.buyTickets(session1, 3, 123, spectator.getId());
-		shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123);
-
-	}
-
-	@Test(expected = InvalidCreditCardException.class)
-	public void deliverTicketsCreditCardExceptionTest()
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
+	@Test
+	public void deliverTicketsCreditCardExceptionTest() throws InstanceNotFoundException, ExpiratedSessionException,
 			InvalidCreditCardException, TicketsAlreadyPickedUpException, NotEnoughTicketsException {
 
 		User spectator = signUpUser("spectator");
@@ -267,13 +244,13 @@ public class ShoppingManagementServiceTest {
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1, 3, 000, spectator.getId());
-		shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123);
+		assertThrows(InvalidCreditCardException.class,
+				() -> shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123));
 
 	}
 
 	@Test
-	public void deliverTicketsTest()
-			throws InstanceNotFoundException, PermissionRoleException, ExpiratedSessionException,
+	public void deliverTicketsTest() throws InstanceNotFoundException, ExpiratedSessionException,
 			InvalidCreditCardException, TicketsAlreadyPickedUpException, NotEnoughTicketsException {
 
 		User spectator = signUpUser("spectator");
