@@ -35,19 +35,23 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	private PurchaseDao purchaseDao;
 
 	@Override
-	public Purchase buyTickets(Session session, Integer tickets, Integer creditCard, Long userId)
+	public Purchase buyTickets(Long sessionId, Integer tickets, Integer creditCard, Long userId)
 			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
 
 		User user = permissionChecker.checkUser(userId);
-		if (!sessionDao.existsById(session.getId())) {
-			throw new InstanceNotFoundException("Session not found:", session);
+		Optional<Session> optSession = sessionDao.findById(sessionId);
+
+		if (!optSession.isPresent()) {
+			throw new InstanceNotFoundException("session", sessionId);
 		}
+
+		Session session = optSession.get();
 
 		if (session.getDate().isBefore(LocalDateTime.now())) {
 			throw new ExpiratedSessionException(session.getId());
 		}
 
-		if (((tickets < 1) || (tickets > 10)) || (tickets > session.getRoom().getCapacity())) {
+		if ((tickets > session.getRoom().getCapacity())) {
 			throw new NotEnoughTicketsException(tickets);
 		}
 
@@ -61,14 +65,14 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	public Block<Purchase> showPurchases(Long userId, int page, int size) throws InstanceNotFoundException {
 
 		permissionChecker.checkUser(userId);
-		Slice<Purchase> slice = purchaseDao.findByUserIdOrderByDateAsc(userId, PageRequest.of(page, size));
+		Slice<Purchase> slice = purchaseDao.findByUserIdOrderByDateDesc(userId, PageRequest.of(page, size));
 
 		return new Block<>(slice.getContent(), slice.hasNext());
 
 	}
 
 	@Override
-	public boolean deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
+	public Purchase deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
 			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException {
 
 		permissionChecker.checkUser(userId);
@@ -79,14 +83,14 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		try {
 			purchase = optPurchase.get();
 		} catch (NoSuchElementException e) {
-			throw new InstanceNotFoundException("Purchase not found with id: ", purchaseId);
+			throw new InstanceNotFoundException("purchase", purchaseId);
 		}
 
 		if (purchase.getSession().getDate().isBefore(LocalDateTime.now())) {
 			throw new ExpiratedSessionException(purchase.getSession().getId());
 		}
 
-		if (purchase.getCreditCard() != creditCard) {
+		if (!creditCard.equals(purchase.getCreditCard())) {
 			throw new InvalidCreditCardException(creditCard);
 		}
 
@@ -96,7 +100,7 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 
 		purchase.setPickedUp(true);
 		purchaseDao.save(purchase);
-		return true;
+		return purchase;
 	}
 
 }

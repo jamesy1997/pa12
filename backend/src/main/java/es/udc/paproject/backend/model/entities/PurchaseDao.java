@@ -6,5 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PurchaseDao extends PagingAndSortingRepository<Purchase, Long> {
 
-	Slice<Purchase> findByUserIdOrderByDateAsc(Long userId, Pageable pageable);
+	Slice<Purchase> findByUserIdOrderByDateDesc(Long userId, Pageable pageable);
 }

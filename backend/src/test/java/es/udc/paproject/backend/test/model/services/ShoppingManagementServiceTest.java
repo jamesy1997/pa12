@@ -98,7 +98,7 @@ public class ShoppingManagementServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
 
-		shoppingManagementService.buyTickets(session1, 5, 123456789, user1.getId());
+		shoppingManagementService.buyTickets(session1.getId(), 5, 123456789, user1.getId());
 		assertEquals(95, session1.getRoom().getCapacity());
 
 		LocalDateTime date2 = LocalDateTime.of(2019, 03, 03, 11, 25);
@@ -115,7 +115,7 @@ public class ShoppingManagementServiceTest {
 		sessionDao.save(session2);
 
 		assertThrows(ExpiratedSessionException.class,
-				() -> shoppingManagementService.buyTickets(session2, 5, 123456789, user2.getId()));
+				() -> shoppingManagementService.buyTickets(session2.getId(), 5, 123456789, user2.getId()));
 
 		LocalDateTime date3 = LocalDateTime.of(2021, 03, 03, 11, 25);
 		City city3 = new City("City3");
@@ -131,13 +131,7 @@ public class ShoppingManagementServiceTest {
 		sessionDao.save(session3);
 
 		assertThrows(NotEnoughTicketsException.class,
-				() -> shoppingManagementService.buyTickets(session3, 105, 123456789, user3.getId()));
-
-		assertThrows(NotEnoughTicketsException.class,
-				() -> shoppingManagementService.buyTickets(session3, -4, 123456789, user3.getId()));
-
-		assertThrows(NotEnoughTicketsException.class,
-				() -> shoppingManagementService.buyTickets(session3, 11, 123456789, user3.getId()));
+				() -> shoppingManagementService.buyTickets(session3.getId(), 105, 123456789, user3.getId()));
 	}
 
 	@Test
@@ -165,8 +159,8 @@ public class ShoppingManagementServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
 
-		Purchase purchase = shoppingManagementService.buyTickets(session1, 10, 12345, user1.getId());
-		Purchase purchase2 = shoppingManagementService.buyTickets(session1, 10, 12345, user1.getId());
+		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 10, 12345, user1.getId());
+		Purchase purchase2 = shoppingManagementService.buyTickets(session1.getId(), 10, 12345, user1.getId());
 
 		Block<Purchase> expectedBlock = new Block<>(Arrays.asList(purchase, purchase2), false);
 		assertEquals(expectedBlock, shoppingManagementService.showPurchases(user1.getId(), 0, 2));
@@ -243,7 +237,7 @@ public class ShoppingManagementServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
 
-		Purchase purchase = shoppingManagementService.buyTickets(session1, 3, 000, spectator.getId());
+		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 000, spectator.getId());
 		assertThrows(InvalidCreditCardException.class,
 				() -> shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123));
 
@@ -270,9 +264,11 @@ public class ShoppingManagementServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
 
-		Purchase purchase = shoppingManagementService.buyTickets(session1, 3, 123, spectator.getId());
+		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, spectator.getId());
+		Purchase deliverTickets = shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(),
+				123);
 
-		assertTrue(shoppingManagementService.deliverTickets(ticketofficer.getId(), purchase.getId(), 123));
+		assertTrue(deliverTickets.isPickedUp());
 
 	}
 

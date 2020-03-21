@@ -64,4 +64,4 @@ INSERT INTO Session (movieId, roomId, date, price) VALUE (3, 7, DATE '2021-06-18
 INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 8, DATE '2021-06-18', 5.99);
 INSERT INTO Session (movieId, roomId, date, price) VALUE (4, 9, DATE '2021-06-18', 5.99);
 INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 10, DATE '2021-06-18', 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 11, DATE '2021-06-18', 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 11, DATE '2000-06-18', 5.99);
