@@ -3,24 +3,24 @@ package es.udc.paproject.backend.model.services;
 import java.util.List;
 
 public class Block<T> {
-	
+
 	private List<T> items;
-    private boolean existMoreItems;
+	private boolean existMoreItems;
 
-    public Block(List<T> items, boolean existMoreItems) {
-        
-        this.items = items;
-        this.existMoreItems = existMoreItems;
+	public Block(List<T> items, boolean existMoreItems) {
 
-    }
-    
-    public List<T> getItems() {
-        return items;
-    }
-    
-    public boolean getExistMoreItems() {
-        return existMoreItems;
-    }
+		this.items = items;
+		this.existMoreItems = existMoreItems;
+
+	}
+
+	public List<T> getItems() {
+		return items;
+	}
+
+	public boolean getExistMoreItems() {
+		return existMoreItems;
+	}
 
 	@Override
 	public int hashCode() {
@@ -50,5 +50,5 @@ public class Block<T> {
 			return false;
 		return true;
 	}
-    
+
 }
