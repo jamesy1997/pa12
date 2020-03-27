@@ -1,6 +1,9 @@
 package es.udc.paproject.backend.model.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -10,6 +13,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.Purchase;
 import es.udc.paproject.backend.model.entities.PurchaseDao;
 import es.udc.paproject.backend.model.entities.Session;
@@ -101,6 +105,32 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		purchase.setPickedUp(true);
 		purchaseDao.save(purchase);
 		return purchase;
+	}
+
+	@Override
+	public Block<PurchaseHistoryItem> showPurchaseHistory(Long userId, int page, int size)
+			throws InstanceNotFoundException {
+
+		permissionChecker.checkUser(userId);
+		Slice<Purchase> purchases = purchaseDao.findByUserIdOrderByDateDesc(userId, PageRequest.of(page, size));
+
+		List<Purchase> purchaseList = purchases.getContent();
+
+		Block<PurchaseHistoryItem> purchaseHistory = new Block<>(new ArrayList<>(), purchases.hasNext());
+
+		ListIterator<Purchase> listIterator = purchaseList.listIterator();
+
+		while (listIterator.hasNext()) {
+
+			Purchase purchase1 = listIterator.next();
+			Cinema cinema1 = purchase1.getSession().getRoom().getCinema();
+
+			PurchaseHistoryItem purchaseHistoryItem = new PurchaseHistoryItem(purchase1, cinema1);
+			purchaseHistory.getItems().add(purchaseHistoryItem);
+
+		}
+
+		return purchaseHistory;
 	}
 
 }

@@ -51,4 +51,9 @@ public class Block<T> {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Block [items=" + items + ", existMoreItems=" + existMoreItems + "]";
+	}
+
 }

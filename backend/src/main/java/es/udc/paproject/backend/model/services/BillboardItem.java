@@ -11,7 +11,7 @@ public class BillboardItem<T> {
 	private List<Session> items;
 
 	public BillboardItem(Movie movie, List<Session> items) {
-		super();
+
 		this.movie = movie;
 		this.items = items;
 	}
@@ -62,6 +62,11 @@ public class BillboardItem<T> {
 		} else if (!movie.equals(other.movie))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "BillboardItem [movie=" + movie + ", items=" + items + "]";
 	}
 
 }
