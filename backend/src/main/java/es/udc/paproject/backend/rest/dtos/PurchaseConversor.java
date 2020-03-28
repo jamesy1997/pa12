@@ -26,7 +26,8 @@ public class PurchaseConversor {
 	private final static PurchaseSummaryDto toPurchaseSummaryDto(Purchase purchase) {
 
 		return new PurchaseSummaryDto(toMillis(purchase.getDate()), purchase.getSession().getMovie().getTitle(),
-				purchase.getTicket(), purchase.getTotalPrice(), toMillis(purchase.getSession().getDate()));
+				purchase.getTicket(), purchase.getTotalPrice(), toMillis(purchase.getSession().getDate()),
+				purchase.getSession().getRoom().getCinema().getName());
 	}
 
 	private final static long toMillis(LocalDateTime date) {

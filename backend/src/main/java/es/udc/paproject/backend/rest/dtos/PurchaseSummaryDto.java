@@ -9,18 +9,20 @@ public class PurchaseSummaryDto {
 	private Integer ticket;
 	private BigDecimal totalPrice;
 	private Long sessionDate;
+	private String cinemaName;
 
 	public PurchaseSummaryDto() {
 	}
 
-	public PurchaseSummaryDto(Long purchaseDate, String title, Integer ticket, BigDecimal totalPrice,
-			Long sessionDate) {
+	public PurchaseSummaryDto(Long purchaseDate, String title, Integer ticket, BigDecimal totalPrice, Long sessionDate,
+			String cinemaName) {
 
 		this.purchaseDate = purchaseDate;
 		this.title = title;
 		this.ticket = ticket;
 		this.totalPrice = totalPrice;
 		this.sessionDate = sessionDate;
+		this.cinemaName = cinemaName;
 	}
 
 	public Long getPurchaseDate() {
@@ -61,6 +63,14 @@ public class PurchaseSummaryDto {
 
 	public void setSessionDate(Long sessionDate) {
 		this.sessionDate = sessionDate;
+	}
+
+	public String getCinemaName() {
+		return cinemaName;
+	}
+
+	public void setCinemaName(String cinemaName) {
+		this.cinemaName = cinemaName;
 	}
 
 }

@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------
 
 INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
-	("ticketofficer1", "password", "Juan", "Gabin", "juan.gabin@udc.es", 0);
+	("viewer", "viewer", "Juan", "Gabin", "juan.gabin@udc.es", 1);
 	
 INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
 	("ticketofficer2", "password", "Elena", "Nito", "elena@udc.es", 0);
@@ -15,13 +15,13 @@ INSERT INTO City (name) VALUES ("Ponferrada");
 	
 INSERT INTO Cinema (name, cityId) VALUES ("Yelmo", 1);
 INSERT INTO Cinema (name, cityId) VALUES ("CINESA", 1);
-INSERT INTO Cinema (name, cityId) VALUES ("Cantones Cines", 1);
-INSERT INTO Cinema (name, cityId) VALUES ("Cines Compostela", 2);
 INSERT INTO Cinema (name, cityId) VALUES ("NUMAX", 2);
+INSERT INTO Cinema (name, cityId) VALUES ("Cines Compostela", 2);
+INSERT INTO Cinema (name, cityId) VALUES ("CinesP", 3);
 INSERT INTO Cinema (name, cityId) VALUES ("La Dehesa", 3);
 
 INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 1", 100, 1);
-INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 2", 50, 1);
+INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 2", 9, 1);
 INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 1", 150, 2);
 INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 2", 50, 2);
 INSERT INTO Room (name, capacity, cinemaId) VALUES ("Sala 1", 100, 3);
