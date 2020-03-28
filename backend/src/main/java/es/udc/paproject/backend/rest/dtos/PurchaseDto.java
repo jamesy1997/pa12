@@ -7,12 +7,13 @@ public class PurchaseDto {
 	private Long date;
 	private boolean pickedUp;
 	private String username;
+	private String cinemaName;
 
 	public PurchaseDto() {
 
 	}
 
-	public PurchaseDto(Long id, Integer ticket, Long date, boolean pickedUp, String username) {
+	public PurchaseDto(Long id, Integer ticket, Long date, boolean pickedUp, String username, String cinemaName) {
 
 		this.id = id;
 
@@ -20,6 +21,7 @@ public class PurchaseDto {
 		this.date = date;
 		this.pickedUp = pickedUp;
 		this.username = username;
+		this.cinemaName = cinemaName;
 	}
 
 	public Long getId() {
@@ -60,6 +62,14 @@ public class PurchaseDto {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getCinemaName() {
+		return cinemaName;
+	}
+
+	public void setCinemaName(String cinemaName) {
+		this.cinemaName = cinemaName;
 	}
 
 }

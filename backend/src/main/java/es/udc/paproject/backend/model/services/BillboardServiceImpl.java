@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,18 +93,25 @@ public class BillboardServiceImpl implements BillboardService {
 		return billboard;
 	}
 
-	public Block<City> showCitys(int page, int size) throws InstanceNotFoundException {
+	@Override
+	public List<City> showCities() {
 
-		Slice<City> slice = cityDao.findAll(PageRequest.of(page, size));
-		return new Block<>(slice.getContent(), slice.hasNext());
+		Iterable<City> cities = cityDao.findAll(Sort.by(Sort.Direction.ASC, "name"));
+		List<City> citiesAsList = new ArrayList<>();
 
+		cities.forEach(c -> citiesAsList.add(c));
+
+		return citiesAsList;
 	}
 
-	public Block<Cinema> showCinemas(Long cityId, int page, int size) throws InstanceNotFoundException {
+	public List<Cinema> showCinemas(Long cityId) {
 
-		Slice<Cinema> slice = cinemaDao.findByCityId(cityId, PageRequest.of(page, size));
-		return new Block<>(slice.getContent(), slice.hasNext());
+		Iterable<Cinema> cinemas = cinemaDao.findByCityId(cityId);
+		List<Cinema> cinemasAsList = new ArrayList<>();
 
+		cinemas.forEach(c -> cinemasAsList.add(c));
+
+		return cinemasAsList;
 	}
 
 }

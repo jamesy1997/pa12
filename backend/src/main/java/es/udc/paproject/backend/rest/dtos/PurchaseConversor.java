@@ -20,7 +20,8 @@ public class PurchaseConversor {
 	public final static PurchaseDto toPurchaseDto(Purchase purchase) {
 
 		return new PurchaseDto(purchase.getId(), purchase.getTicket(), toMillis(purchase.getDate()),
-				purchase.isPickedUp(), purchase.getUser().getUserName());
+				purchase.isPickedUp(), purchase.getUser().getUserName(),
+				purchase.getSession().getRoom().getCinema().getName());
 	}
 
 	private final static PurchaseSummaryDto toPurchaseSummaryDto(Purchase purchase) {

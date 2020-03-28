@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class BillboardServiceTest {
 	@Test
 	public void findOneSessionTest() throws InstanceNotFoundException, NoRemainingSessionsException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 3, 28, 23, 50);
+		LocalDateTime date1 = LocalDateTime.of(2020, 3, 29, 23, 50);
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -100,7 +101,7 @@ public class BillboardServiceTest {
 	@Test
 	public void findMoreMoviesTest() throws InstanceNotFoundException, NoRemainingSessionsException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 3, 28, 23, 00);
+		LocalDateTime date1 = LocalDateTime.of(2020, 3, 29, 23, 00);
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -115,7 +116,7 @@ public class BillboardServiceTest {
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
 		billboardItem1.getItems().add(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 3, 28, 23, 50);
+		LocalDateTime date2 = LocalDateTime.of(2020, 3, 29, 23, 50);
 //		City city2 = new City("City2");
 //		cityDao.save(city2);
 //		Cinema cinema2 = new Cinema("cinema2", city2);
@@ -145,7 +146,7 @@ public class BillboardServiceTest {
 	@Test
 	public void findMoreSessionsTest() throws InstanceNotFoundException, NoRemainingSessionsException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 3, 28, 23, 00);
+		LocalDateTime date1 = LocalDateTime.of(2020, 3, 29, 23, 00);
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -160,7 +161,7 @@ public class BillboardServiceTest {
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
 		billboardItem1.getItems().add(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 3, 28, 23, 50);
+		LocalDateTime date2 = LocalDateTime.of(2020, 3, 29, 23, 50);
 //		City city2 = new City("City2");
 //		cityDao.save(city2);
 //		Cinema cinema2 = new Cinema("cinema2", city2);
@@ -190,7 +191,7 @@ public class BillboardServiceTest {
 	@Test
 	public void findCinemaSessions() throws InstanceNotFoundException, NoRemainingSessionsException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 3, 28, 23, 00);
+		LocalDateTime date1 = LocalDateTime.of(2020, 3, 29, 23, 00);
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -202,7 +203,7 @@ public class BillboardServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5));
 		sessionDao.save(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 3, 28, 23, 50);
+		LocalDateTime date2 = LocalDateTime.of(2020, 3, 29, 23, 50);
 		City city2 = new City("City2");
 		cityDao.save(city2);
 		Cinema cinema2 = new Cinema("cinema2", city2);
@@ -227,9 +228,9 @@ public class BillboardServiceTest {
 	@Test
 	public void showNoCitiesTest() throws InstanceNotFoundException {
 
-		Block<City> expectedCities = new Block<>(new ArrayList<>(), false);
+		List<City> expectedCities = new ArrayList<>();
 
-		assertEquals(expectedCities, billboardService.showCitys(0, 1));
+		assertEquals(expectedCities, billboardService.showCities());
 
 	}
 
@@ -240,17 +241,17 @@ public class BillboardServiceTest {
 		cityDao.save(city1);
 		City city2 = new City("City2");
 		cityDao.save(city2);
-		Block<City> expectedBlock = new Block<>(Arrays.asList(city1, city2), false);
+		List<City> expectedBlock = new ArrayList<>(Arrays.asList(city1, city2));
 
-		assertEquals(expectedBlock, billboardService.showCitys(0, 2));
+		assertEquals(expectedBlock, billboardService.showCities());
 	}
 
 	@Test
 	public void showNoCinemasTest() throws InstanceNotFoundException {
 
-		Block<Cinema> expectedCinemas = new Block<>(new ArrayList<>(), false);
+		List<Cinema> expectedCinemas = new ArrayList<>();
 
-		assertEquals(expectedCinemas, billboardService.showCinemas(null, 0, 1));
+		assertEquals(expectedCinemas, billboardService.showCinemas(null));
 
 	}
 
@@ -272,13 +273,13 @@ public class BillboardServiceTest {
 		Cinema cinema3 = new Cinema("Cinema3", city2);
 		cinemaDao.save(cinema3);
 
-		Block<Cinema> expectedBlock1 = new Block<>(Arrays.asList(cinema1, cinema2), false);
-		Block<Cinema> expectedBlock2 = new Block<>(Arrays.asList(cinema3), false);
-		Block<Cinema> expectedBlock3 = new Block<>(new ArrayList<>(), false);
+		List<Cinema> expectedBlock1 = new ArrayList<>(Arrays.asList(cinema1, cinema2));
+		List<Cinema> expectedBlock2 = new ArrayList<>(Arrays.asList(cinema3));
+		List<Cinema> expectedBlock3 = new ArrayList<>();
 
-		assertEquals(expectedBlock1, billboardService.showCinemas(city1.getId(), 0, 2));
-		assertEquals(expectedBlock2, billboardService.showCinemas(city2.getId(), 0, 1));
-		assertEquals(expectedBlock3, billboardService.showCinemas(city3.getId(), 0, 1));
+		assertEquals(expectedBlock1, billboardService.showCinemas(city1.getId()));
+		assertEquals(expectedBlock2, billboardService.showCinemas(city2.getId()));
+		assertEquals(expectedBlock3, billboardService.showCinemas(city3.getId()));
 	}
 
 }

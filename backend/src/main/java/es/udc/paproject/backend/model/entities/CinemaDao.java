@@ -1,11 +1,11 @@
 package es.udc.paproject.backend.model.entities;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import java.util.List;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CinemaDao extends PagingAndSortingRepository<Cinema, Long> {
 
-	Slice<Cinema> findByCityId(Long cityId, Pageable pageable);
+	List<Cinema> findByCityId(Long cityId);
 
 }

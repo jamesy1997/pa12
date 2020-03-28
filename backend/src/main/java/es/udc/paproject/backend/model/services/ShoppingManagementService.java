@@ -16,4 +16,5 @@ public interface ShoppingManagementService {
 
 	Purchase deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
 			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException;
+
 }

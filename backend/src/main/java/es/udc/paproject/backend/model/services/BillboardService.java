@@ -1,6 +1,7 @@
 package es.udc.paproject.backend.model.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.City;
@@ -10,10 +11,10 @@ import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
 
 public interface BillboardService {
 
-	public Block<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
+	Block<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
 			throws InstanceNotFoundException, NoRemainingSessionsException;
 
-	Block<City> showCitys(int page, int size) throws InstanceNotFoundException;
+	List<City> showCities();
 
-	Block<Cinema> showCinemas(Long cityId, int page, int size) throws InstanceNotFoundException;
+	List<Cinema> showCinemas(Long cityId);
 }
