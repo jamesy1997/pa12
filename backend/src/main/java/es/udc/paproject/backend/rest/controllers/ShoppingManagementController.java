@@ -39,7 +39,7 @@ import es.udc.paproject.backend.rest.dtos.PurchaseSummaryDto;
 
 @RestController
 @RequestMapping("/shopping")
-public class ShopppingManagementController {
+public class ShoppingManagementController {
 
 	private final static String EXPIRATED_SESSION_EXCEPTION_CODE = "project.exceptions.ExpiratedSessionException";
 	private final static String NOT_ENOUGH_TICKETS_EXCEPTION_CODE = "project.exceptions.NotEnoughTicketsException";

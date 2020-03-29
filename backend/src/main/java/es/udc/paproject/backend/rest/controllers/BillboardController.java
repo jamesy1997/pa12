@@ -6,7 +6,6 @@ import static es.udc.paproject.backend.rest.dtos.CityConversor.toCityDtos;
 import static es.udc.paproject.backend.rest.dtos.MovieConversor.toMovieDto;
 import static es.udc.paproject.backend.rest.dtos.SessionConversor.toSessionDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,6 +30,7 @@ import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
 import es.udc.paproject.backend.rest.dtos.BillboardItemDto;
+import es.udc.paproject.backend.rest.dtos.BillboardParamsDto;
 import es.udc.paproject.backend.rest.dtos.BlockDto;
 import es.udc.paproject.backend.rest.dtos.CinemaDto;
 import es.udc.paproject.backend.rest.dtos.CityDto;
@@ -64,28 +65,28 @@ public class BillboardController {
 		return toCityDtos(billboardService.showCities());
 	}
 
-	@GetMapping("/cities/{id}/cinemas")
+	@GetMapping("/cinemas/{cityId}")
 	public List<CinemaDto> showCinemas(@PathVariable Long cityId) {
 		return toCinemaDtos(billboardService.showCinemas(cityId));
 	}
 
-	@GetMapping("/cities/{id}/cinemas/{id}/billboard/{date}")
-	public BlockDto<BillboardItemDto<Long>> showBillboard(@PathVariable LocalDateTime date, @PathVariable Long cityId,
-			@PathVariable Long cinemaId) throws NoRemainingSessionsException, InstanceNotFoundException {
+	@GetMapping
+	public BlockDto<BillboardItemDto<Long>> showBillboard(@RequestBody BillboardParamsDto params)
+			throws NoRemainingSessionsException, InstanceNotFoundException {
 
-		Cinema cinema = billboardService.findCinema(cinemaId);
-		Block<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinema);
+		Cinema cinema = billboardService.findCinema(params.getCinemaId());
+		Block<BillboardItem<Session>> billboard = billboardService.findSessions(params.getDate(), cinema);
 
 		return new BlockDto<>((toBillboardItemDtos(billboard).getItems()), billboard.getExistMoreItems());
 	}
 
-	@GetMapping("/movies/{id}")
+	@GetMapping("/movie/{movieId}")
 	public MovieDto findMovieDetail(@PathVariable Long movieId) {
 
 		return toMovieDto(billboardService.findMovie(movieId));
 	}
 
-	@GetMapping("/sessions/{id}")
+	@GetMapping("/session/{sessionId}")
 	public SessionDto findSessionDetail(@PathVariable Long sessionId) {
 
 		return toSessionDto(billboardService.findSession(sessionId));

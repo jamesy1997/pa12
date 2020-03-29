@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/shopping/buyTickets/*").hasRole("SPECTATOR")
 				.antMatchers(HttpMethod.GET, "/shopping/purchases").hasRole("SPECTATOR")
 				.antMatchers(HttpMethod.POST, "/shopping/deliverTickets/*").hasRole("TICKETOFFICER").anyRequest()
-				.hasRole("SPECTATOR");
+				.hasAnyRole("SPECTATOR", "TICKETOFFICER");
 
 	}
 
