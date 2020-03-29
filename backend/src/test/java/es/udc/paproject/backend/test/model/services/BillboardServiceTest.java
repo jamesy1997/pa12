@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.paproject.backend.model.entities.BillboardItem;
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.CinemaDao;
 import es.udc.paproject.backend.model.entities.City;
@@ -28,7 +29,6 @@ import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.entities.UserDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
-import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.UserService;
@@ -134,10 +134,6 @@ public class BillboardServiceTest {
 		Block<BillboardItem<Session>> billboard = new Block<>(new ArrayList<>(), false);
 		billboard.getItems().add(billboardItem1);
 		billboard.getItems().add(billboardItem2);
-		System.out.println("Holaaaaaa");
-		System.out.println("cartelera: " + billboard);
-		Block<BillboardItem<Session>> actual = billboardService.findSessions(LocalDateTime.now(), cinema1);
-		System.out.println("aqui esta: " + actual);
 
 		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema1));
 
@@ -180,11 +176,6 @@ public class BillboardServiceTest {
 		Block<BillboardItem<Session>> billboard = new Block<>(new ArrayList<>(), false);
 		billboard.getItems().add(billboardItem1);
 //		billboard.getItems().add(billboardItem2);
-
-		System.out.println("cartelera: " + billboard.toString());
-		Block<BillboardItem<Session>> actual = billboardService.findSessions(LocalDateTime.now(), cinema1);
-		System.out.println("sesiones encontradas: " + actual.toString());
-
 		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema1));
 	}
 

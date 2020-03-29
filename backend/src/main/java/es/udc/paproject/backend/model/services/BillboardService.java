@@ -3,6 +3,7 @@ package es.udc.paproject.backend.model.services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import es.udc.paproject.backend.model.entities.BillboardItem;
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.City;
 import es.udc.paproject.backend.model.entities.Session;

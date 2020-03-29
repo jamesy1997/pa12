@@ -1,9 +1,6 @@
-package es.udc.paproject.backend.model.services;
+package es.udc.paproject.backend.model.entities;
 
 import java.util.List;
-
-import es.udc.paproject.backend.model.entities.Movie;
-import es.udc.paproject.backend.model.entities.Session;
 
 public class BillboardItem<T> {
 

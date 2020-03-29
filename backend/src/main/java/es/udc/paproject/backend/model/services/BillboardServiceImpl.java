@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.paproject.backend.model.entities.BillboardItem;
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.CinemaDao;
 import es.udc.paproject.backend.model.entities.City;
@@ -43,7 +44,6 @@ public class BillboardServiceImpl implements BillboardService {
 		LocalDate today = date.toLocalDate();
 		LocalTime todaysLimit = LocalTime.of(23, 59);
 		LocalDateTime endDate = LocalDateTime.of(today, todaysLimit);
-//		Long cinemaId = cinema.getId();
 
 		Slice<Session> sessions = sessionDao.getSessionByDateOrderByMovieTitle(date, endDate, cinema);
 
