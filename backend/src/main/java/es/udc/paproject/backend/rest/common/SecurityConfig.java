@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().antMatchers(HttpMethod.POST, "/users/loginFromServiceToken").permitAll()
 				.antMatchers(HttpMethod.POST, "/shopping/buyTickets/*").hasRole("SPECTATOR")
 				.antMatchers(HttpMethod.GET, "/shopping/purchases").hasRole("SPECTATOR")
-				.antMatchers(HttpMethod.POST, "/shopping/deliverTickets/*").hasRole("TICKETSELLER").anyRequest()
+				.antMatchers(HttpMethod.POST, "/shopping/deliverTickets/*").hasRole("TICKETOFFICER").anyRequest()
 				.hasRole("SPECTATOR");
 
 	}

@@ -7,7 +7,7 @@ INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
 	("viewer", "$2a$10$Sz098HdIbrj2Qr3C2ojNKOYuG46VxdUz3dQSAbFOhMMyo6S2JSCQK", "viewer", "tester", "viewer.tester@udc.es", 1);
 	
 INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
-	("ticketsell", "$2a$10$Z20/C8ugfrbZqJkD0ZjudOKbA9ARbK0DHaSVP1HIU1.c3kOXPYkTO", "ticketseller", "tester", "ticketseller.tester@udc.es", 0);
+	("ticketseller", "$2a$10$o4TYmbQ9Uvk3AO9tvRvFgO0OEYXz8Y5bEiCVYpuiTC/CwfBNpVewS", "ticketseller", "tester", "ticketseller.tester@udc.es", 0);
 
 INSERT INTO City (name) VALUES ("A Corunha");
 INSERT INTO City (name) VALUES ("SDC");
@@ -56,12 +56,12 @@ man.", 140);
 
 INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99);
 INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 2, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 4.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 4.99);
 INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 4, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 3.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 5, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 6, DATE_ADD(DATE(NOW()), INTERVAL '1 00:05' DAY_MINUTE), 4.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (3, 7, DATE_ADD(DATE(NOW()), INTERVAL '2 00:05' DAY_MINUTE), 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 8, DATE_ADD(DATE(NOW()), INTERVAL '3 00:05' DAY_MINUTE), 3.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (4, 9, DATE_ADD(DATE(NOW()), INTERVAL '4 00:05' DAY_MINUTE), 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 10, DATE_ADD(DATE(NOW()), INTERVAL '5 00:05' DAY_MINUTE), 5.99);
-INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 11, DATE_ADD(DATE(NOW()), INTERVAL '5 00:05' DAY_MINUTE), 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 5, DATE_ADD(DATE(NOW()), INTERVAL '0 17:55' DAY_MINUTE), 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 6, DATE_ADD(DATE(NOW()), INTERVAL '1 15:05' DAY_MINUTE), 4.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (3, 7, DATE_ADD(DATE(NOW()), INTERVAL '2 20::05' DAY_MINUTE), 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 8, DATE_ADD(DATE(NOW()), INTERVAL '3 10:05' DAY_MINUTE), 3.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (4, 9, DATE_ADD(DATE(NOW()), INTERVAL '4 18:05' DAY_MINUTE), 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (2, 10, DATE_ADD(DATE(NOW()), INTERVAL '5 19:05' DAY_MINUTE), 5.99);
+INSERT INTO Session (movieId, roomId, date, price) VALUE (1, 11, DATE_ADD(DATE(NOW()), INTERVAL '5 20:05' DAY_MINUTE), 5.99);
