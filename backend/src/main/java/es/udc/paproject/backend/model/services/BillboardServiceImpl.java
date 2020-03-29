@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
@@ -13,12 +14,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.paproject.backend.model.entities.BillboardItem;
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.CinemaDao;
 import es.udc.paproject.backend.model.entities.City;
 import es.udc.paproject.backend.model.entities.CityDao;
 import es.udc.paproject.backend.model.entities.Movie;
+import es.udc.paproject.backend.model.entities.MovieDao;
 import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
@@ -36,6 +37,9 @@ public class BillboardServiceImpl implements BillboardService {
 
 	@Autowired
 	private CinemaDao cinemaDao;
+
+	@Autowired
+	private MovieDao movieDao;
 
 	@Override
 	public Block<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
@@ -98,10 +102,18 @@ public class BillboardServiceImpl implements BillboardService {
 
 		Iterable<City> cities = cityDao.findAll(Sort.by(Sort.Direction.ASC, "name"));
 		List<City> citiesAsList = new ArrayList<>();
-
 		cities.forEach(c -> citiesAsList.add(c));
-
 		return citiesAsList;
+	}
+
+	public BillboardCinema showBillboardCinema(LocalDateTime date, Cinema cinema)
+			throws InstanceNotFoundException, NoRemainingSessionsException {
+
+		BillboardCinema billboardCinema = new BillboardCinema(cinema, null);
+		Block<BillboardItem<Session>> billboard = findSessions(date, cinema);
+
+		billboardCinema.setBillboard(billboard);
+		return billboardCinema;
 	}
 
 	public List<Cinema> showCinemas(Long cityId) {
@@ -112,6 +124,27 @@ public class BillboardServiceImpl implements BillboardService {
 		cinemas.forEach(c -> cinemasAsList.add(c));
 
 		return cinemasAsList;
+	}
+
+	public Movie findMovie(Long movieId) {
+
+		Optional<Movie> movie = movieDao.findById(movieId);
+
+		return movie.get();
+	}
+
+	public Session findSession(Long sessionId) {
+
+		Optional<Session> session = sessionDao.findById(sessionId);
+
+		return session.get();
+	}
+
+	public Cinema findCinema(Long cinemaId) {
+
+		Optional<Cinema> cinema = cinemaDao.findById(cinemaId);
+
+		return cinema.get();
 	}
 
 }

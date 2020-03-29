@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.udc.paproject.backend.model.entities.BillboardItem;
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.CinemaDao;
 import es.udc.paproject.backend.model.entities.City;
@@ -29,6 +28,7 @@ import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.entities.UserDao;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
+import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.model.services.UserService;

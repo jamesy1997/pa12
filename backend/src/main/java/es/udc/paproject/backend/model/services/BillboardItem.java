@@ -1,8 +1,10 @@
-package es.udc.paproject.backend.model.entities;
+package es.udc.paproject.backend.model.services;
 
 import java.util.List;
 
-public class BillboardItem<T> {
+import es.udc.paproject.backend.model.entities.Movie;
+
+public class BillboardItem<Session> {
 
 	private Movie movie;
 	private List<Session> items;

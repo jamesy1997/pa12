@@ -2,15 +2,15 @@ package es.udc.paproject.backend.rest.dtos;
 
 import java.util.List;
 
-public class BillboardItemDto<T> {
+public class BillboardItemDto<Long> {
 
 	private String movieTitle;
-	private List<T> items;
+	private List<Long> items;
 
 	public BillboardItemDto() {
 	}
 
-	public BillboardItemDto(String movieTitle, List<T> items) {
+	public BillboardItemDto(String movieTitle, List<Long> items) {
 		super();
 		this.movieTitle = movieTitle;
 		this.items = items;
@@ -24,11 +24,11 @@ public class BillboardItemDto<T> {
 		this.movieTitle = movieTitle;
 	}
 
-	public List<T> getItems() {
+	public List<Long> getItems() {
 		return items;
 	}
 
-	public void setItems(List<T> items) {
+	public void setItems(List<Long> items) {
 		this.items = items;
 	}
 

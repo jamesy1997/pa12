@@ -1,8 +1,12 @@
 package es.udc.paproject.backend.rest.controllers;
 
+import static es.udc.paproject.backend.rest.dtos.BillboardItemConversor.toBillboardItemDtos;
 import static es.udc.paproject.backend.rest.dtos.CityConversor.toCinemaDtos;
 import static es.udc.paproject.backend.rest.dtos.CityConversor.toCityDtos;
+import static es.udc.paproject.backend.rest.dtos.MovieConversor.toMovieDto;
+import static es.udc.paproject.backend.rest.dtos.SessionConversor.toSessionDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,16 +15,26 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.udc.paproject.backend.model.entities.Cinema;
+import es.udc.paproject.backend.model.entities.Session;
+import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
+import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
+import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
+import es.udc.paproject.backend.rest.dtos.BillboardItemDto;
+import es.udc.paproject.backend.rest.dtos.BlockDto;
 import es.udc.paproject.backend.rest.dtos.CinemaDto;
 import es.udc.paproject.backend.rest.dtos.CityDto;
+import es.udc.paproject.backend.rest.dtos.MovieDto;
+import es.udc.paproject.backend.rest.dtos.SessionDto;
 
 @RestController
 @RequestMapping("/billboard")
@@ -50,9 +64,31 @@ public class BillboardController {
 		return toCityDtos(billboardService.showCities());
 	}
 
-	@GetMapping("/cinemas")
-	public List<CinemaDto> showCinemas(Long cityId) {
+	@GetMapping("/cities/{id}/cinemas")
+	public List<CinemaDto> showCinemas(@PathVariable Long cityId) {
 		return toCinemaDtos(billboardService.showCinemas(cityId));
+	}
+
+	@GetMapping("/cities/{id}/cinemas/{id}/billboard/{date}")
+	public BlockDto<BillboardItemDto<Long>> showBillboard(@PathVariable LocalDateTime date, @PathVariable Long cityId,
+			@PathVariable Long cinemaId) throws NoRemainingSessionsException, InstanceNotFoundException {
+
+		Cinema cinema = billboardService.findCinema(cinemaId);
+		Block<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinema);
+
+		return new BlockDto<>((toBillboardItemDtos(billboard).getItems()), billboard.getExistMoreItems());
+	}
+
+	@GetMapping("/movies/{id}")
+	public MovieDto findMovieDetail(@PathVariable Long movieId) {
+
+		return toMovieDto(billboardService.findMovie(movieId));
+	}
+
+	@GetMapping("/sessions/{id}")
+	public SessionDto findSessionDetail(@PathVariable Long sessionId) {
+
+		return toSessionDto(billboardService.findSession(sessionId));
 	}
 
 }
