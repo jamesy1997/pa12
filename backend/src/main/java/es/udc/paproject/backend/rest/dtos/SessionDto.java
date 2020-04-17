@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public class SessionDto {
 
-	private Long id;
 	private String movieTitle;
 	private Integer duration;
 	private BigDecimal price;
@@ -15,24 +14,15 @@ public class SessionDto {
 	public SessionDto() {
 	}
 
-	public SessionDto(Long id, String movieTitle, Integer duration, BigDecimal price, Long date, String roomName,
+	public SessionDto(String movieTitle, Integer duration, BigDecimal price, Long date, String roomName,
 			Integer capacityLeft) {
 
-		this.id = id;
 		this.movieTitle = movieTitle;
 		this.duration = duration;
 		this.price = price;
 		this.date = date;
 		this.roomName = roomName;
 		this.capacityLeft = capacityLeft;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getMovieTitle() {

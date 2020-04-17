@@ -6,6 +6,7 @@ import static es.udc.paproject.backend.rest.dtos.CityConversor.toCityDtos;
 import static es.udc.paproject.backend.rest.dtos.MovieConversor.toMovieDto;
 import static es.udc.paproject.backend.rest.dtos.SessionConversor.toSessionDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,8 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.Session;
+import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
+import es.udc.paproject.backend.model.exceptions.NotFoundMovieException;
+import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
 import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.model.services.Block;
@@ -81,15 +85,16 @@ public class BillboardController {
 	}
 
 	@GetMapping("/movie/{movieId}")
-	public MovieDto findMovieDetail(@PathVariable Long movieId) {
+	public MovieDto findMovieDetail(@PathVariable Long movieId) throws NotFoundMovieException {
 
 		return toMovieDto(billboardService.findMovie(movieId));
 	}
 
 	@GetMapping("/session/{sessionId}")
-	public SessionDto findSessionDetail(@PathVariable Long sessionId) {
+	public SessionDto findSessionDetail(@PathVariable Long sessionId, @PathVariable LocalDateTime localDateTime)
+			throws NotFoundSessionException, ExpiratedSessionException {
 
-		return toSessionDto(billboardService.findSession(sessionId));
+		return toSessionDto(billboardService.findSession(sessionId, localDateTime));
 	}
 
 }

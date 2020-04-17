@@ -10,11 +10,12 @@ public interface SessionDao extends PagingAndSortingRepository<Session, Long> {
 
 	boolean existsById(Long sessionId);
 
-	@Query("SELECT s FROM Session s JOIN Room r ON s.room = r.id WHERE (s.date BETWEEN ?1 AND ?2) AND (r.cinema = ?3) ORDER BY movieId, date")
+	@Query("SELECT s FROM Session s WHERE (s.date BETWEEN ?1 AND ?2) AND (s.room.cinema = ?3) ORDER BY s.movie.title, date")
 	public Slice<Session> getSessionByDateOrderByMovieTitle(LocalDateTime startDate, LocalDateTime endDate,
 			Cinema cinema);
 
-//	@Query("SELECT s.Id FROM Session s JOIN Movie m ON s.MovieId = m.Id WHERE s.date BETWEEN ?1 AND ?2 ORDER BY m.Title")
+//	@Query("SELECT s FROM Session s JOIN Room r ON s.room = r.id WHERE (s.date BETWEEN ?1 AND ?2) AND (r.cinema = ?3) ORDER BY movieId, date")
 //	public Slice<Session> getSessionByDateOrderByMovieTitle(LocalDateTime startDate, LocalDateTime endDate,
-//			Pageable pageable);
+//			Cinema cinema);
+
 }

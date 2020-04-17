@@ -6,6 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CinemaDao extends PagingAndSortingRepository<Cinema, Long> {
 
-	List<Cinema> findByCityId(Long cityId);
+	List<Cinema> findByCityIdOrderByName(Long cityId);
 
 }

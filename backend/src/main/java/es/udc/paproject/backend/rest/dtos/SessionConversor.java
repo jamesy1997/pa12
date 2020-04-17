@@ -13,9 +13,8 @@ public class SessionConversor {
 
 	public final static SessionDto toSessionDto(Session session) {
 
-		return new SessionDto(session.getId(), session.getMovie().getTitle(), session.getMovie().getDuration(),
-				session.getPrice(), toMillis(session.getDate()), session.getRoom().getName(),
-				session.getRoom().getCapacity());
+		return new SessionDto(session.getMovie().getTitle(), session.getMovie().getDuration(), session.getPrice(),
+				toMillis(session.getDate()), session.getRoom().getName(), session.getRoom().getCapacity());
 
 	}
 

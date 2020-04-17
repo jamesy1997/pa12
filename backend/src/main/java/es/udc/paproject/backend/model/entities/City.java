@@ -1,6 +1,5 @@
 package es.udc.paproject.backend.model.entities;
 
-import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -8,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 public class City {
@@ -50,12 +48,6 @@ public class City {
 
 	public void setCinemas(Set<Cinema> cinema) {
 		this.cinemas = cinema;
-	}
-
-	@Transient
-	public Optional<Cinema> getCinema(Long cinemaId) {
-
-		return cinemas.stream().filter(cinema -> cinema.getId().equals(cinemaId)).findFirst();
 	}
 
 	public void addCinema(Cinema cinema) {

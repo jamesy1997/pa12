@@ -9,7 +9,7 @@ public class MovieConversor {
 
 	public final static MovieDto toMovieDto(Movie movie) {
 
-		return new MovieDto(movie.getId(), movie.getTitle(), movie.getSummary(), movie.getDuration());
+		return new MovieDto(movie.getTitle(), movie.getSummary(), movie.getDuration());
 	}
 
 	public final static Movie toMovie(MovieDto movieDto) {
