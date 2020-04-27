@@ -183,8 +183,7 @@ public class ShoppingManagementServiceTest {
 		user1.setRole(RoleType.TICKETOFFICER);
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
 		sessionDao.save(session1);
-		assertThrows(InstanceNotFoundException.class,
-				() -> shoppingManagementService.deliverTickets(user1.getId(), -1L, 123));
+		assertThrows(InstanceNotFoundException.class, () -> shoppingManagementService.deliverTickets(-1L, 123));
 	}
 
 	@Test
@@ -211,7 +210,7 @@ public class ShoppingManagementServiceTest {
 		purchase.getSession().setDate(expirated);
 
 		assertThrows(ExpiratedSessionException.class,
-				() -> shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123));
+				() -> shoppingManagementService.deliverTickets(purchase.getId(), 123));
 
 	}
 
@@ -236,7 +235,7 @@ public class ShoppingManagementServiceTest {
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 000, user1.getId());
 		assertThrows(InvalidCreditCardException.class,
-				() -> shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123));
+				() -> shoppingManagementService.deliverTickets(purchase.getId(), 123));
 
 	}
 
@@ -259,10 +258,10 @@ public class ShoppingManagementServiceTest {
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, user1.getId());
-		shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123);
+		shoppingManagementService.deliverTickets(purchase.getId(), 123);
 
 		assertThrows(TicketsAlreadyPickedUpException.class,
-				() -> shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123));
+				() -> shoppingManagementService.deliverTickets(purchase.getId(), 123));
 
 	}
 
@@ -286,7 +285,7 @@ public class ShoppingManagementServiceTest {
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, user1.getId());
-		Purchase deliverTickets = shoppingManagementService.deliverTickets(user1.getId(), purchase.getId(), 123);
+		Purchase deliverTickets = shoppingManagementService.deliverTickets(purchase.getId(), 123);
 
 		assertTrue(deliverTickets.isPickedUp());
 

@@ -1,12 +1,10 @@
 package es.udc.paproject.backend.rest.dtos;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import es.udc.paproject.backend.model.entities.Purchase;
+import es.udc.paproject.backend.rest.common.MillisConversor;
 
 public class PurchaseConversor {
 
@@ -19,19 +17,17 @@ public class PurchaseConversor {
 
 	public final static PurchaseDto toPurchaseDto(Purchase purchase) {
 
-		return new PurchaseDto(purchase.getId(), purchase.getTicket(), toMillis(purchase.getDate()),
+		return new PurchaseDto(purchase.getId(), purchase.getTicket(), MillisConversor.toMillis(purchase.getDate()),
 				purchase.isPickedUp(), purchase.getUser().getUserName(),
 				purchase.getSession().getRoom().getCinema().getName());
 	}
 
 	private final static PurchaseSummaryDto toPurchaseSummaryDto(Purchase purchase) {
 
-		return new PurchaseSummaryDto(toMillis(purchase.getDate()), purchase.getSession().getMovie().getTitle(),
-				purchase.getTicket(), purchase.getTotalPrice(), toMillis(purchase.getSession().getDate()),
+		return new PurchaseSummaryDto(MillisConversor.toMillis(purchase.getDate()),
+				purchase.getSession().getMovie().getTitle(), purchase.getTicket(), purchase.getTotalPrice(),
+				MillisConversor.toMillis(purchase.getSession().getDate()),
 				purchase.getSession().getRoom().getCinema().getName());
 	}
 
-	private final static long toMillis(LocalDateTime date) {
-		return date.truncatedTo(ChronoUnit.MINUTES).atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
-	}
 }

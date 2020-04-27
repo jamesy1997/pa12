@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.services.BillboardItem;
-import es.udc.paproject.backend.model.services.Block;
 
 public class BillboardItemConversor {
 
@@ -19,8 +18,7 @@ public class BillboardItemConversor {
 		return new BillboardItemDto<>(billboardItem.getMovie().getTitle(), items);
 	}
 
-	public final static Block<BillboardItemDto<Long>> toBillboardItemDtos(Block<BillboardItem<Session>> billboard) {
-		return new Block<>(billboard.getItems().stream().map(b -> toBillboardItemDto(b)).collect(Collectors.toList()),
-				billboard.getExistMoreItems());
+	public final static List<BillboardItemDto<Long>> toBillboardItemDtos(List<BillboardItem<Session>> billboard) {
+		return billboard.stream().map(b -> toBillboardItemDto(b)).collect(Collectors.toList());
 	}
 }

@@ -14,7 +14,7 @@ public interface ShoppingManagementService {
 
 	Block<Purchase> showPurchases(Long userId, int page, int size) throws InstanceNotFoundException;
 
-	Purchase deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
+	Purchase deliverTickets(Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
 			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException;
 
 }

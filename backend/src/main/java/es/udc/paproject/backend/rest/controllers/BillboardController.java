@@ -7,6 +7,7 @@ import static es.udc.paproject.backend.rest.dtos.MovieConversor.toMovieDto;
 import static es.udc.paproject.backend.rest.dtos.SessionConversor.toSessionDto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,11 +32,9 @@ import es.udc.paproject.backend.model.exceptions.NotFoundMovieException;
 import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
 import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
-import es.udc.paproject.backend.model.services.Block;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
 import es.udc.paproject.backend.rest.dtos.BillboardItemDto;
 import es.udc.paproject.backend.rest.dtos.BillboardParamsDto;
-import es.udc.paproject.backend.rest.dtos.BlockDto;
 import es.udc.paproject.backend.rest.dtos.CinemaDto;
 import es.udc.paproject.backend.rest.dtos.CityDto;
 import es.udc.paproject.backend.rest.dtos.MovieDto;
@@ -69,28 +68,28 @@ public class BillboardController {
 		return toCityDtos(billboardService.showCities());
 	}
 
-	@GetMapping("/cinemas/{cityId}")
+	@GetMapping("/cities/{cityId}/cinemas")
 	public List<CinemaDto> showCinemas(@PathVariable Long cityId) {
 		return toCinemaDtos(billboardService.showCinemas(cityId));
 	}
 
-	@GetMapping
-	public BlockDto<BillboardItemDto<Long>> showBillboard(@RequestBody BillboardParamsDto params)
+	@GetMapping("/billboard/sessions")
+	public List<BillboardItemDto<Long>> showBillboard(@RequestBody BillboardParamsDto params)
 			throws NoRemainingSessionsException, InstanceNotFoundException {
 
 		Cinema cinema = billboardService.findCinema(params.getCinemaId());
-		Block<BillboardItem<Session>> billboard = billboardService.findSessions(params.getDate(), cinema);
+		List<BillboardItem<Session>> billboard = billboardService.findSessions(params.getDate(), cinema);
 
-		return new BlockDto<>((toBillboardItemDtos(billboard).getItems()), billboard.getExistMoreItems());
+		return new ArrayList<>((toBillboardItemDtos(billboard)));
 	}
 
-	@GetMapping("/movie/{movieId}")
+	@GetMapping("/movies/{movieId}")
 	public MovieDto findMovieDetail(@PathVariable Long movieId) throws NotFoundMovieException {
 
 		return toMovieDto(billboardService.findMovie(movieId));
 	}
 
-	@GetMapping("/session/{sessionId}")
+	@GetMapping("/sessions/{sessionId}")
 	public SessionDto findSessionDetail(@PathVariable Long sessionId, @PathVariable LocalDateTime localDateTime)
 			throws NotFoundSessionException, ExpiratedSessionException {
 

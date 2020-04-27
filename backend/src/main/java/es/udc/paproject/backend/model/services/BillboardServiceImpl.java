@@ -45,7 +45,7 @@ public class BillboardServiceImpl implements BillboardService {
 	private MovieDao movieDao;
 
 	@Override
-	public Block<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
+	public List<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
 			throws InstanceNotFoundException, NoRemainingSessionsException {
 
 		LocalDate today = date.toLocalDate();
@@ -56,7 +56,7 @@ public class BillboardServiceImpl implements BillboardService {
 
 		List<Session> sessionList = sessions.getContent();
 
-		Block<BillboardItem<Session>> billboard = new Block<>(new ArrayList<>(), sessions.hasNext());
+		List<BillboardItem<Session>> billboard = new ArrayList<>();
 
 		ListIterator<Session> listIterator = sessionList.listIterator();
 
@@ -77,14 +77,14 @@ public class BillboardServiceImpl implements BillboardService {
 
 					currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
 					currentBillboardItem.getItems().add(session1);
-					billboard.getItems().add(currentBillboardItem);
+					billboard.add(currentBillboardItem);
 					currentMovie = session1.getMovie();
 
 				} else if (currentMovie.getTitle() != session1.getMovie().getTitle()) {
 
 					currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
 					currentBillboardItem.getItems().add(session1);
-					billboard.getItems().add(currentBillboardItem);
+					billboard.add(currentBillboardItem);
 					currentMovie = session1.getMovie();
 
 				} else {

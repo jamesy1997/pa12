@@ -114,11 +114,11 @@ public class ShoppingManagementController {
 	}
 
 	@PostMapping("/deliverTickets/{purchaseId}")
-	public PurchaseDto deliverTickets(@RequestAttribute Long userId, @PathVariable Long purchaseId,
-			@RequestBody DeliverTicketsParamsDto params) throws InstanceNotFoundException, ExpiratedSessionException,
-			InvalidCreditCardException, TicketsAlreadyPickedUpException {
+	public PurchaseDto deliverTickets(@PathVariable Long purchaseId, @RequestBody DeliverTicketsParamsDto params)
+			throws InstanceNotFoundException, ExpiratedSessionException, InvalidCreditCardException,
+			TicketsAlreadyPickedUpException {
 
-		return toPurchaseDto(shoppingManagementService.deliverTickets(userId, purchaseId, params.getCreditCard()));
+		return toPurchaseDto(shoppingManagementService.deliverTickets(purchaseId, params.getCreditCard()));
 
 	}
 }

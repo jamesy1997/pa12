@@ -15,7 +15,7 @@ import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
 
 public interface BillboardService {
 
-	Block<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
+	List<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
 			throws InstanceNotFoundException, NoRemainingSessionsException;
 
 	List<City> showCities();

@@ -99,10 +99,10 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	}
 
 	@Override
-	public Purchase deliverTickets(Long userId, Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
+	public Purchase deliverTickets(Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
 			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException {
 
-		permissionChecker.checkUser(userId);
+		// permissionChecker.checkUser(userId);
 		Optional<Purchase> optPurchase;
 		Purchase purchase;
 		optPurchase = purchaseDao.findById(purchaseId);
@@ -126,7 +126,8 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		}
 
 		purchase.setPickedUp(true);
-		purchaseDao.save(purchase);
+		// purchaseDao.save(purchase); // en teoría sobra el save, porque lo hace
+		// automaticamente
 		return purchase;
 	}
 
