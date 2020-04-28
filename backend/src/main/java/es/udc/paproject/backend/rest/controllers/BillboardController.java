@@ -13,12 +13,14 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +29,9 @@ import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
+import es.udc.paproject.backend.model.exceptions.MovieNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
-import es.udc.paproject.backend.model.exceptions.NotFoundMovieException;
-import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
+import es.udc.paproject.backend.model.exceptions.SessionNotFoundException;
 import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
@@ -45,6 +47,8 @@ import es.udc.paproject.backend.rest.dtos.SessionDto;
 public class BillboardController {
 
 	private final static String NO_REMAINING_SESSIONS_EXCEPTION_CODE = "project.exceptions.NoRemainingSessions";
+	private final static String MOVIE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.MovieNotFoundException";
+	private final static String SESSION_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.SessionNotFoundException";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -59,6 +63,28 @@ public class BillboardController {
 
 		String errorMessage = messageSource.getMessage(NO_REMAINING_SESSIONS_EXCEPTION_CODE, null,
 				NO_REMAINING_SESSIONS_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+	}
+
+	@ExceptionHandler(MovieNotFoundException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleMovieNotFoundException(MovieNotFoundException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(MOVIE_NOT_FOUND_EXCEPTION_CODE, null,
+				MOVIE_NOT_FOUND_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+	}
+
+	@ExceptionHandler(SessionNotFoundException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleSessionNotFoundException(SessionNotFoundException exception, Locale locale) {
+
+		String errorMessage = messageSource.getMessage(SESSION_NOT_FOUND_EXCEPTION_CODE, null,
+				SESSION_NOT_FOUND_EXCEPTION_CODE, locale);
 
 		return new ErrorsDto(errorMessage);
 	}
@@ -84,14 +110,15 @@ public class BillboardController {
 	}
 
 	@GetMapping("/movies/{movieId}")
-	public MovieDto findMovieDetail(@PathVariable Long movieId) throws NotFoundMovieException {
+	public MovieDto findMovieDetail(@PathVariable Long movieId) throws MovieNotFoundException {
 
 		return toMovieDto(billboardService.findMovie(movieId));
 	}
 
 	@GetMapping("/sessions/{sessionId}")
-	public SessionDto findSessionDetail(@PathVariable Long sessionId, @PathVariable LocalDateTime localDateTime)
-			throws NotFoundSessionException, ExpiratedSessionException {
+	public SessionDto findSessionDetail(@PathVariable Long sessionId,
+			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime)
+			throws SessionNotFoundException, ExpiratedSessionException {
 
 		return toSessionDto(billboardService.findSession(sessionId, localDateTime));
 	}

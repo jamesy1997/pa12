@@ -34,33 +34,6 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	@Autowired
 	private PurchaseDao purchaseDao;
 
-//	@Override
-//	public Purchase buyTickets(Long sessionId, Integer tickets, Integer creditCard, Long userId)
-//			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
-//
-//		User user = permissionChecker.checkUser(userId);
-//		Optional<Session> optSession = sessionDao.findById(sessionId);
-//
-//		if (!optSession.isPresent()) {
-//			throw new InstanceNotFoundException("session", sessionId);
-//		}
-//
-//		Session session = optSession.get();
-//
-//		if (session.getDate().isBefore(LocalDateTime.now())) {
-//			throw new ExpiratedSessionException(session.getId());
-//		}
-//
-//		if ((tickets > session.getRemainingTickets())) {
-//			throw new NotEnoughTicketsException(tickets);
-//		}
-//
-//		Purchase purchase = new Purchase(session, tickets, creditCard, LocalDateTime.now(), false, user);
-//		session.setRemainingTickets(session.getRemainingTickets() - tickets);
-//		purchase = purchaseDao.save(purchase);
-//		return purchase;
-//	}
-
 	@Override
 	public Purchase buyTickets(Long sessionId, Integer tickets, Integer creditCard, Long userId)
 			throws InstanceNotFoundException, ExpiratedSessionException, NotEnoughTicketsException {
@@ -89,6 +62,7 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Block<Purchase> showPurchases(Long userId, int page, int size) throws InstanceNotFoundException {
 
 		permissionChecker.checkUser(userId);
@@ -102,7 +76,6 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 	public Purchase deliverTickets(Long purchaseId, Integer creditCard) throws InstanceNotFoundException,
 			ExpiratedSessionException, InvalidCreditCardException, TicketsAlreadyPickedUpException {
 
-		// permissionChecker.checkUser(userId);
 		Optional<Purchase> optPurchase;
 		Purchase purchase;
 		optPurchase = purchaseDao.findById(purchaseId);
@@ -126,8 +99,6 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		}
 
 		purchase.setPickedUp(true);
-		// purchaseDao.save(purchase); // en teoría sobra el save, porque lo hace
-		// automaticamente
 		return purchase;
 	}
 

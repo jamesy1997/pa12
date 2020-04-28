@@ -25,8 +25,8 @@ import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
-import es.udc.paproject.backend.model.exceptions.NotFoundMovieException;
-import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
+import es.udc.paproject.backend.model.exceptions.MovieNotFoundException;
+import es.udc.paproject.backend.model.exceptions.SessionNotFoundException;
 
 @Service
 @Transactional
@@ -107,6 +107,7 @@ public class BillboardServiceImpl implements BillboardService {
 		return citiesAsList;
 	}
 
+	@Override
 	public List<Cinema> showCinemas(Long cityId) {
 
 		Iterable<Cinema> cinemas = cinemaDao.findByCityIdOrderByName(cityId);
@@ -117,27 +118,31 @@ public class BillboardServiceImpl implements BillboardService {
 		return cinemasAsList;
 	}
 
-	public Movie findMovie(Long movieId) throws NotFoundMovieException {
+	@Override
+	@Transactional(readOnly = true)
+	public Movie findMovie(Long movieId) throws MovieNotFoundException {
 
 		Optional<Movie> movie = movieDao.findById(movieId);
 
 		if (!movie.isPresent()) {
 
-			throw new NotFoundMovieException();
+			throw new MovieNotFoundException();
 		} else {
 
 			return movie.get();
 		}
 	}
 
+	@Override
+	@Transactional(readOnly = true)
 	public Session findSession(Long sessionId, LocalDateTime localDateTime)
-			throws NotFoundSessionException, ExpiratedSessionException {
+			throws SessionNotFoundException, ExpiratedSessionException {
 
 		Optional<Session> session = sessionDao.findById(sessionId);
 
 		if (!session.isPresent()) {
 
-			throw new NotFoundSessionException();
+			throw new SessionNotFoundException();
 
 		} else if (session.get().getDate().isBefore(localDateTime)) {
 
@@ -149,6 +154,8 @@ public class BillboardServiceImpl implements BillboardService {
 		}
 	}
 
+	@Override
+	@Transactional(readOnly = true)
 	public Cinema findCinema(Long cinemaId) {
 
 		Optional<Cinema> cinema = cinemaDao.findById(cinemaId);

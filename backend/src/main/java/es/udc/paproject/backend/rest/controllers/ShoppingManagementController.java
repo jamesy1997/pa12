@@ -75,7 +75,7 @@ public class ShoppingManagementController {
 	}
 
 	@ExceptionHandler(TicketsAlreadyPickedUpException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ErrorsDto handleTicketsAlreadyPickedUpException(TicketsAlreadyPickedUpException exception, Locale locale) {
 

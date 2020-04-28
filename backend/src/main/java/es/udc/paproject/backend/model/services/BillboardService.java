@@ -10,8 +10,8 @@ import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
-import es.udc.paproject.backend.model.exceptions.NotFoundMovieException;
-import es.udc.paproject.backend.model.exceptions.NotFoundSessionException;
+import es.udc.paproject.backend.model.exceptions.MovieNotFoundException;
+import es.udc.paproject.backend.model.exceptions.SessionNotFoundException;
 
 public interface BillboardService {
 
@@ -22,10 +22,10 @@ public interface BillboardService {
 
 	List<Cinema> showCinemas(Long cityId);
 
-	Movie findMovie(Long movieId) throws NotFoundMovieException;
+	Movie findMovie(Long movieId) throws MovieNotFoundException;
 
 	Session findSession(Long sessionId, LocalDateTime localDateTime)
-			throws NotFoundSessionException, ExpiratedSessionException;
+			throws SessionNotFoundException, ExpiratedSessionException;
 
 	Cinema findCinema(Long cinemaId);
 }

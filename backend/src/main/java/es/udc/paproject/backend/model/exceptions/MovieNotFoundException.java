@@ -1,9 +1,9 @@
 package es.udc.paproject.backend.model.exceptions;
 
 @SuppressWarnings("serial")
-public class NotFoundMovieException extends Exception {
+public class MovieNotFoundException extends Exception {
 
-	public NotFoundMovieException() {
+	public MovieNotFoundException() {
 		super("Movie not found");
 	}
 

@@ -1,6 +1,7 @@
 package es.udc.paproject.backend.test.model.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -98,8 +99,13 @@ public class ShoppingManagementServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
 		sessionDao.save(session1);
 
-		shoppingManagementService.buyTickets(session1.getId(), 5, 123456789, user1.getId());
+		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 5, 123456789, user1.getId());
+
 		assertEquals(95, session1.getRemainingTickets());
+		assertEquals(100, purchase.getSession().getRoom().getCapacity());
+		assertEquals(session1, purchase.getSession());
+		assertEquals(user1, purchase.getUser());
+		assertFalse(purchase.isPickedUp());
 
 		LocalDateTime date2 = LocalDateTime.of(2019, 03, 03, 11, 25);
 		City city2 = new City("City2");

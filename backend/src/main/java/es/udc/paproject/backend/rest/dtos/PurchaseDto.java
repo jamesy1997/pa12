@@ -16,7 +16,6 @@ public class PurchaseDto {
 	public PurchaseDto(Long id, Integer ticket, Long date, boolean pickedUp, String username, String cinemaName) {
 
 		this.id = id;
-
 		this.ticket = ticket;
 		this.date = date;
 		this.pickedUp = pickedUp;

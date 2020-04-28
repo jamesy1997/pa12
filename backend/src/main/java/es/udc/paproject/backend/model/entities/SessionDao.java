@@ -14,8 +14,4 @@ public interface SessionDao extends PagingAndSortingRepository<Session, Long> {
 	public Slice<Session> getSessionByDateOrderByMovieTitle(LocalDateTime startDate, LocalDateTime endDate,
 			Cinema cinema);
 
-//	@Query("SELECT s FROM Session s JOIN Room r ON s.room = r.id WHERE (s.date BETWEEN ?1 AND ?2) AND (r.cinema = ?3) ORDER BY movieId, date")
-//	public Slice<Session> getSessionByDateOrderByMovieTitle(LocalDateTime startDate, LocalDateTime endDate,
-//			Cinema cinema);
-
 }
