@@ -61,7 +61,7 @@ CREATE TABLE Session (
 	roomId BIGINT NOT NULL, 
 	date DATETIME NOT NULL, 
 	price DECIMAL(11, 2) NOT NULL,
-	remainingTickets INTEGER NOT NULL,
+	remainingTickets BIGINT NOT NULL,
 	version BIGINT NOT NULL,
 	CONSTRAINT SessionPK PRIMARY KEY (id),
 	CONSTRAINT SessionMovieIdFK FOREIGN KEY(movieId)

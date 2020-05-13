@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +28,8 @@ import es.udc.paproject.backend.model.entities.RoomDao;
 import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.entities.SessionDao;
 import es.udc.paproject.backend.model.entities.UserDao;
+import es.udc.paproject.backend.model.exceptions.DateNotAllowedException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
 import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.model.services.UserService;
@@ -62,21 +64,51 @@ public class BillboardServiceTest {
 	MovieDao movieDao;
 
 	@Test
-	public void findNoSessionsTest() throws InstanceNotFoundException, NoRemainingSessionsException {
+	public void dateNotAllowedTest() throws InstanceNotFoundException, DateNotAllowedException {
 
+		LocalDateTime date1 = LocalDateTime.of(2020, 5, 13, 20, 50);
+		LocalDate date = LocalDate.of(2020, 1, 1);
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
 		cinemaDao.save(cinema1);
-		assertThrows(NoRemainingSessionsException.class,
-				() -> billboardService.findSessions(LocalDateTime.now(), cinema1));
+		Room room1 = new Room("room1", 100, cinema1);
+		roomDao.save(room1);
+		Movie movie1 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie1);
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session1);
+		assertThrows(DateNotAllowedException.class, () -> billboardService.findSessions(date, cinema1.getId()));
 
 	}
 
 	@Test
-	public void findOneSessionTest() throws InstanceNotFoundException, NoRemainingSessionsException {
+	public void dateNotAllowedTest2() throws InstanceNotFoundException, DateNotAllowedException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 4, 29, 23, 50);
+		LocalDateTime date1 = LocalDateTime.of(2020, 5, 13, 20, 50);
+		LocalDate date = LocalDate.of(2020, 10, 3);
+		City city1 = new City("City1");
+		cityDao.save(city1);
+		Cinema cinema1 = new Cinema("cinema1", city1);
+		cinemaDao.save(cinema1);
+		Room room1 = new Room("room1", 100, cinema1);
+		roomDao.save(room1);
+		Movie movie1 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie1);
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session1);
+		assertThrows(DateNotAllowedException.class, () -> billboardService.findSessions(date, cinema1.getId()));
+
+	}
+
+	@Test
+	public void findOneSessionTest() throws InstanceNotFoundException, DateNotAllowedException {
+
+		LocalTime time = LocalTime.of(20, 50);
+		LocalDate date = LocalDate.now();
+		LocalDateTime date1 = LocalDateTime.of(date, time);
+
+		LocalDateTime date2 = LocalDateTime.now();
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -93,14 +125,17 @@ public class BillboardServiceTest {
 		List<BillboardItem<Session>> billboard = new ArrayList<>();
 		billboard.add(billboardItem1);
 
-		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema1));
+		assertEquals(billboard, billboardService.findSessions(date2.toLocalDate(), cinema1.getId()));
 
 	}
 
 	@Test
-	public void findMoreMoviesTest() throws InstanceNotFoundException, NoRemainingSessionsException {
+	public void findMoreMoviesTest() throws InstanceNotFoundException, DateNotAllowedException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 4, 29, 23, 00);
+		LocalTime time = LocalTime.of(23, 00);
+		LocalDate date = LocalDate.now();
+		LocalDateTime date1 = LocalDateTime.of(date, time);
+
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -115,11 +150,10 @@ public class BillboardServiceTest {
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
 		billboardItem1.getItems().add(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 4, 29, 23, 50);
-//		City city2 = new City("City2");
-//		cityDao.save(city2);
-//		Cinema cinema2 = new Cinema("cinema2", city2);
-//		cinemaDao.save(cinema2);
+		LocalTime time2 = LocalTime.of(23, 50);
+		LocalDate localdate = LocalDate.now();
+		LocalDateTime date2 = LocalDateTime.of(localdate, time2);
+
 		Room room2 = new Room("room2", 100, cinema1);
 		roomDao.save(room2);
 		Movie movie2 = new Movie("movie2", "summary", 5);
@@ -134,14 +168,17 @@ public class BillboardServiceTest {
 		billboard.add(billboardItem1);
 		billboard.add(billboardItem2);
 
-		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema1));
+		assertEquals(billboard, billboardService.findSessions(LocalDate.now(), cinema1.getId()));
 
 	}
 
 	@Test
-	public void findMoreSessionsTest() throws InstanceNotFoundException, NoRemainingSessionsException {
+	public void findMoreSessionsTest() throws InstanceNotFoundException, DateNotAllowedException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 4, 29, 23, 00);
+		LocalTime time = LocalTime.of(23, 00);
+		LocalDate date = LocalDate.now();
+		LocalDateTime date1 = LocalDateTime.of(date, time);
+
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -156,31 +193,28 @@ public class BillboardServiceTest {
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
 		billboardItem1.getItems().add(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 4, 29, 23, 50);
-//		City city2 = new City("City2");
-//		cityDao.save(city2);
-//		Cinema cinema2 = new Cinema("cinema2", city2);
-//		cinemaDao.save(cinema2);
-//		Room room2 = new Room("room2", 100, cinema1);
-//		roomDao.save(room2);
+		LocalTime time2 = LocalTime.of(23, 50);
+		LocalDate localdate2 = LocalDate.now();
+		LocalDateTime date2 = LocalDateTime.of(localdate2, time2);
+
 		Movie movie2 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie2);
 		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
 		sessionDao.save(session2);
 
-//		BillboardItem<Session> billboardItem2 = new BillboardItem<>(session2.getMovie(), new ArrayList<>());
-//		billboardItem2.getItems().add(session2);
-
 		billboardItem1.getItems().add(session2);
 		List<BillboardItem<Session>> billboard = new ArrayList<>();
 		billboard.add(billboardItem1);
-		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema1));
+		assertEquals(billboard, billboardService.findSessions(LocalDate.now(), cinema1.getId()));
 	}
 
 	@Test
-	public void findCinemaSessions() throws InstanceNotFoundException, NoRemainingSessionsException {
+	public void findMoreSessions2Test() throws InstanceNotFoundException, DateNotAllowedException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 4, 29, 23, 00);
+		LocalTime time = LocalTime.of(23, 00);
+		LocalDate date = LocalDate.now();
+		LocalDateTime date1 = LocalDateTime.of(date, time);
+
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -192,7 +226,96 @@ public class BillboardServiceTest {
 		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
 		sessionDao.save(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 4, 29, 23, 50);
+		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
+		billboardItem1.getItems().add(session1);
+
+		LocalTime time2 = LocalTime.of(23, 59);
+		LocalDate localdate = LocalDate.now();
+		LocalDateTime date2 = LocalDateTime.of(localdate, time2);
+
+		Movie movie2 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie2);
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session2);
+
+		billboardItem1.getItems().add(session2);
+		List<BillboardItem<Session>> billboard = new ArrayList<>();
+		billboard.add(billboardItem1);
+
+		List<BillboardItem<Session>> sessions = billboardService.findSessions(LocalDate.now(), cinema1.getId());
+
+		assertEquals(sessions.size(), 1);
+	}
+
+	@Test
+	public void findMoreSessions3Test() throws InstanceNotFoundException, DateNotAllowedException {
+
+		// Prueba día diferente al actual, con la existencia de más sesiones que las que
+		// se espera devolver
+		LocalTime time = LocalTime.of(23, 00);
+		LocalDate localdate = LocalDate.now().plusDays(1);
+		LocalDateTime date1 = LocalDateTime.of(localdate, time);
+
+		LocalDate date = LocalDate.now().plusDays(1);
+		City city1 = new City("City1");
+		cityDao.save(city1);
+		Cinema cinema1 = new Cinema("cinema1", city1);
+		cinemaDao.save(cinema1);
+		Room room1 = new Room("room1", 100, cinema1);
+		roomDao.save(room1);
+		Movie movie1 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie1);
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session1);
+
+		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
+		billboardItem1.getItems().add(session1);
+
+		LocalTime time2 = LocalTime.of(00, 00);
+		LocalDate localdate2 = LocalDate.now().plusDays(2);
+		LocalDateTime date2 = LocalDateTime.of(localdate2, time2);
+
+		Movie movie2 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie2);
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session2);
+
+		billboardItem1.getItems().add(session2);
+		List<BillboardItem<Session>> billboard = new ArrayList<>();
+		billboard.add(billboardItem1);
+
+		LocalTime time3 = LocalTime.of(10, 00);
+		LocalDate localdate3 = LocalDate.now().plusDays(2);
+		LocalDateTime date3 = LocalDateTime.of(localdate3, time3);
+
+		movieDao.save(movie2);
+		Session session3 = new Session(movie2, room1, date3, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session3);
+
+		billboardItem1.getItems().add(session3);
+		billboard.add(billboardItem1);
+
+		List<BillboardItem<Session>> sessions = billboardService.findSessions(date, cinema1.getId());
+
+		assertEquals(sessions.size(), 1);
+	}
+
+	@Test
+	public void findCinemaSessions() throws InstanceNotFoundException, DateNotAllowedException {
+
+		LocalDateTime date1 = LocalDateTime.of(2020, 5, 13, 23, 00);
+		City city1 = new City("City1");
+		cityDao.save(city1);
+		Cinema cinema1 = new Cinema("cinema1", city1);
+		cinemaDao.save(cinema1);
+		Room room1 = new Room("room1", 100, cinema1);
+		roomDao.save(room1);
+		Movie movie1 = new Movie("movie1", "summary", 5);
+		movieDao.save(movie1);
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		sessionDao.save(session1);
+
+		LocalDateTime date2 = LocalDateTime.of(2020, 5, 13, 23, 50);
 		City city2 = new City("City2");
 		cityDao.save(city2);
 		Cinema cinema2 = new Cinema("cinema2", city2);
@@ -210,7 +333,7 @@ public class BillboardServiceTest {
 		List<BillboardItem<Session>> billboard = new ArrayList<>();
 		billboard.add(billboardItem2);
 
-		assertEquals(billboard, billboardService.findSessions(LocalDateTime.now(), cinema2));
+		assertEquals(billboard, billboardService.findSessions(LocalDate.now(), cinema2.getId()));
 
 	}
 

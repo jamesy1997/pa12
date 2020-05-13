@@ -9,7 +9,6 @@ import java.util.ListIterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +21,9 @@ import es.udc.paproject.backend.model.entities.Movie;
 import es.udc.paproject.backend.model.entities.MovieDao;
 import es.udc.paproject.backend.model.entities.Session;
 import es.udc.paproject.backend.model.entities.SessionDao;
+import es.udc.paproject.backend.model.exceptions.DateNotAllowedException;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
-import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
 import es.udc.paproject.backend.model.exceptions.MovieNotFoundException;
 import es.udc.paproject.backend.model.exceptions.SessionNotFoundException;
 
@@ -45,57 +44,66 @@ public class BillboardServiceImpl implements BillboardService {
 	private MovieDao movieDao;
 
 	@Override
-	public List<BillboardItem<Session>> findSessions(LocalDateTime date, Cinema cinema)
-			throws InstanceNotFoundException, NoRemainingSessionsException {
+	public List<BillboardItem<Session>> findSessions(LocalDate date, Long cinemaId)
+			throws InstanceNotFoundException, DateNotAllowedException {
+
+		List<BillboardItem<Session>> billboard;
+		if (date.equals(LocalDateTime.now().toLocalDate()))
+			billboard = findTodaysSessions(LocalDateTime.now(), cinemaId);
+
+		if (date.isAfter(LocalDateTime.now().plusDays(7).toLocalDate())
+				|| date.isBefore(LocalDateTime.now().toLocalDate())) {
+			throw new DateNotAllowedException();
+		}
+
+		LocalDateTime dateNotToday = date.atStartOfDay();
+		billboard = findTodaysSessions(dateNotToday, cinemaId);
+		return billboard;
+	}
+
+	private List<BillboardItem<Session>> findTodaysSessions(LocalDateTime date, Long cinemaId)
+			throws InstanceNotFoundException {
 
 		LocalDate today = date.toLocalDate();
 		LocalTime todaysLimit = LocalTime.of(23, 59);
 		LocalDateTime endDate = LocalDateTime.of(today, todaysLimit);
 
-		Slice<Session> sessions = sessionDao.getSessionByDateOrderByMovieTitle(date, endDate, cinema);
-
-		List<Session> sessionList = sessions.getContent();
+		List<Session> sessionList = sessionDao.getTodaysSessionByDateOrderByMovieTitle(date, endDate, cinemaId);
 
 		List<BillboardItem<Session>> billboard = new ArrayList<>();
 
 		ListIterator<Session> listIterator = sessionList.listIterator();
 
-		if (sessionList.isEmpty()) {
+		Movie currentMovie = null;
+		BillboardItem<Session> currentBillboardItem = null;
 
-			throw new NoRemainingSessionsException();
+		while (listIterator.hasNext()) {
 
-		} else {
+			Session session1 = listIterator.next();
 
-			Movie currentMovie = null;
-			BillboardItem<Session> currentBillboardItem = null;
+			if (currentMovie == null) {
 
-			while (listIterator.hasNext()) {
+				currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
+				currentBillboardItem.getItems().add(session1);
+				billboard.add(currentBillboardItem);
+				currentMovie = session1.getMovie();
 
-				Session session1 = listIterator.next();
+			} else if (currentMovie.getTitle() != session1.getMovie().getTitle()) {
 
-				if (currentMovie == null) {
+				currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
+				currentBillboardItem.getItems().add(session1);
+				billboard.add(currentBillboardItem);
+				currentMovie = session1.getMovie();
 
-					currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
-					currentBillboardItem.getItems().add(session1);
-					billboard.add(currentBillboardItem);
-					currentMovie = session1.getMovie();
+			} else {
 
-				} else if (currentMovie.getTitle() != session1.getMovie().getTitle()) {
-
-					currentBillboardItem = new BillboardItem<>((session1.getMovie()), new ArrayList<>());
-					currentBillboardItem.getItems().add(session1);
-					billboard.add(currentBillboardItem);
-					currentMovie = session1.getMovie();
-
-				} else {
-
-					currentBillboardItem.getItems().add(session1);
-
-				}
+				currentBillboardItem.getItems().add(session1);
 
 			}
+
 		}
 		return billboard;
+
 	}
 
 	@Override
@@ -135,7 +143,7 @@ public class BillboardServiceImpl implements BillboardService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Session findSession(Long sessionId, LocalDateTime localDateTime)
+	public Session findSessionDetail(Long sessionId, LocalDateTime localDateTime)
 			throws SessionNotFoundException, ExpiratedSessionException {
 
 		Optional<Session> session = sessionDao.findById(sessionId);

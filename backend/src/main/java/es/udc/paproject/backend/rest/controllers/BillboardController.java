@@ -6,6 +6,7 @@ import static es.udc.paproject.backend.rest.dtos.CityConversor.toCityDtos;
 import static es.udc.paproject.backend.rest.dtos.MovieConversor.toMovieDto;
 import static es.udc.paproject.backend.rest.dtos.SessionConversor.toSessionDto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,25 +19,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.udc.paproject.backend.model.entities.Cinema;
 import es.udc.paproject.backend.model.entities.Session;
+import es.udc.paproject.backend.model.exceptions.DateNotAllowedException;
 import es.udc.paproject.backend.model.exceptions.ExpiratedSessionException;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.exceptions.MovieNotFoundException;
-import es.udc.paproject.backend.model.exceptions.NoRemainingSessionsException;
 import es.udc.paproject.backend.model.exceptions.SessionNotFoundException;
 import es.udc.paproject.backend.model.services.BillboardItem;
 import es.udc.paproject.backend.model.services.BillboardService;
 import es.udc.paproject.backend.rest.common.ErrorsDto;
 import es.udc.paproject.backend.rest.dtos.BillboardItemDto;
-import es.udc.paproject.backend.rest.dtos.BillboardParamsDto;
 import es.udc.paproject.backend.rest.dtos.CinemaDto;
 import es.udc.paproject.backend.rest.dtos.CityDto;
 import es.udc.paproject.backend.rest.dtos.MovieDto;
@@ -46,7 +44,7 @@ import es.udc.paproject.backend.rest.dtos.SessionDto;
 @RequestMapping("/billboard")
 public class BillboardController {
 
-	private final static String NO_REMAINING_SESSIONS_EXCEPTION_CODE = "project.exceptions.NoRemainingSessions";
+	private final static String DATE_NOT_ALLOWED_EXCEPTION_CODE = "project.exceptions.DateNotAllowedException";
 	private final static String MOVIE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.MovieNotFoundException";
 	private final static String SESSION_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.SessionNotFoundException";
 
@@ -56,13 +54,13 @@ public class BillboardController {
 	@Autowired
 	private BillboardService billboardService;
 
-	@ExceptionHandler(NoRemainingSessionsException.class)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ExceptionHandler(DateNotAllowedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ErrorsDto handleNoRemainingSessionsException(NoRemainingSessionsException exception, Locale locale) {
+	public ErrorsDto handleDateNotAllowedException(DateNotAllowedException exception, Locale locale) {
 
-		String errorMessage = messageSource.getMessage(NO_REMAINING_SESSIONS_EXCEPTION_CODE, null,
-				NO_REMAINING_SESSIONS_EXCEPTION_CODE, locale);
+		String errorMessage = messageSource.getMessage(DATE_NOT_ALLOWED_EXCEPTION_CODE, null,
+				DATE_NOT_ALLOWED_EXCEPTION_CODE, locale);
 
 		return new ErrorsDto(errorMessage);
 	}
@@ -99,12 +97,14 @@ public class BillboardController {
 		return toCinemaDtos(billboardService.showCinemas(cityId));
 	}
 
-	@GetMapping("/billboard/sessions")
-	public List<BillboardItemDto<Long>> showBillboard(@RequestBody BillboardParamsDto params)
-			throws NoRemainingSessionsException, InstanceNotFoundException {
+	@GetMapping("/sessions")
+	public List<BillboardItemDto<Long>> showBillboard(
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+			@RequestParam Long cinemaId) throws InstanceNotFoundException, DateNotAllowedException {
 
-		Cinema cinema = billboardService.findCinema(params.getCinemaId());
-		List<BillboardItem<Session>> billboard = billboardService.findSessions(params.getDate(), cinema);
+		if (date == null)
+			date = LocalDate.now();
+		List<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinemaId);
 
 		return new ArrayList<>((toBillboardItemDtos(billboard)));
 	}
@@ -120,7 +120,7 @@ public class BillboardController {
 			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime)
 			throws SessionNotFoundException, ExpiratedSessionException {
 
-		return toSessionDto(billboardService.findSession(sessionId, localDateTime));
+		return toSessionDto(billboardService.findSessionDetail(sessionId, localDateTime));
 	}
 
 }

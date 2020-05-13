@@ -1,19 +1,25 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BillboardItemDto<Long> {
 
+	private Long movieId;
 	private String movieTitle;
-	private List<Long> items;
+	private List<Long> sessionsId;
+	private List<LocalDateTime> sessionDate;
 
 	public BillboardItemDto() {
 	}
 
-	public BillboardItemDto(String movieTitle, List<Long> items) {
+	public BillboardItemDto(Long movieId, String movieTitle, List<Long> sessionsId, List<LocalDateTime> sessionDate) {
 		super();
+		this.movieId = movieId;
 		this.movieTitle = movieTitle;
-		this.items = items;
+		this.sessionsId = sessionsId;
+		this.sessionDate = sessionDate;
+
 	}
 
 	public String getMovieTitle() {
@@ -24,12 +30,28 @@ public class BillboardItemDto<Long> {
 		this.movieTitle = movieTitle;
 	}
 
-	public List<Long> getItems() {
-		return items;
+	public List<Long> getSessionsId() {
+		return sessionsId;
 	}
 
-	public void setItems(List<Long> items) {
-		this.items = items;
+	public void setSessionsId(List<Long> sessionsId) {
+		this.sessionsId = sessionsId;
+	}
+
+	public Long getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(Long movieId) {
+		this.movieId = movieId;
+	}
+
+	public List<LocalDateTime> getSessionDate() {
+		return sessionDate;
+	}
+
+	public void setSessionDate(List<LocalDateTime> sessionDate) {
+		this.sessionDate = sessionDate;
 	}
 
 }
