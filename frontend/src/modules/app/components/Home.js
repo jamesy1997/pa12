@@ -1,10 +1,6 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {Billboard} from '../../billboard';
 
-const Home = () => (
-    <div className="text-center">
-        <FormattedMessage id="project.app.Home.welcome"/>
-    </div>
-);
+const Home = () => <Billboard/>;
 
 export default Home;
