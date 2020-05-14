@@ -76,7 +76,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 		assertThrows(DateNotAllowedException.class, () -> billboardService.findSessions(date, cinema1.getId()));
 
@@ -95,7 +95,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 		assertThrows(DateNotAllowedException.class, () -> billboardService.findSessions(date, cinema1.getId()));
 
@@ -117,7 +117,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
 		billboardItem1.getItems().add(session1);
@@ -144,7 +144,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
@@ -158,7 +158,7 @@ public class BillboardServiceTest {
 		roomDao.save(room2);
 		Movie movie2 = new Movie("movie2", "summary", 5);
 		movieDao.save(movie2);
-		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		BillboardItem<Session> billboardItem2 = new BillboardItem<>(session2.getMovie(), new ArrayList<>());
@@ -187,7 +187,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
@@ -199,7 +199,7 @@ public class BillboardServiceTest {
 
 		Movie movie2 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie2);
-		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		billboardItem1.getItems().add(session2);
@@ -223,7 +223,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
@@ -235,7 +235,7 @@ public class BillboardServiceTest {
 
 		Movie movie2 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie2);
-		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		billboardItem1.getItems().add(session2);
@@ -265,7 +265,7 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		BillboardItem<Session> billboardItem1 = new BillboardItem<>(session1.getMovie(), new ArrayList<>());
@@ -277,7 +277,7 @@ public class BillboardServiceTest {
 
 		Movie movie2 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie2);
-		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), room1.getCapacity());
+		Session session2 = new Session(movie2, room1, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		billboardItem1.getItems().add(session2);
@@ -289,7 +289,7 @@ public class BillboardServiceTest {
 		LocalDateTime date3 = LocalDateTime.of(localdate3, time3);
 
 		movieDao.save(movie2);
-		Session session3 = new Session(movie2, room1, date3, new BigDecimal(5), room1.getCapacity());
+		Session session3 = new Session(movie2, room1, date3, new BigDecimal(5), 0);
 		sessionDao.save(session3);
 
 		billboardItem1.getItems().add(session3);
@@ -303,7 +303,10 @@ public class BillboardServiceTest {
 	@Test
 	public void findCinemaSessions() throws InstanceNotFoundException, DateNotAllowedException {
 
-		LocalDateTime date1 = LocalDateTime.of(2020, 5, 13, 23, 00);
+		LocalTime time = LocalTime.of(23, 00);
+		LocalDate localdate = LocalDate.now();
+		LocalDateTime date1 = LocalDateTime.of(localdate, time);
+
 		City city1 = new City("City1");
 		cityDao.save(city1);
 		Cinema cinema1 = new Cinema("cinema1", city1);
@@ -312,10 +315,13 @@ public class BillboardServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 5);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
-		LocalDateTime date2 = LocalDateTime.of(2020, 5, 13, 23, 50);
+		LocalTime time2 = LocalTime.of(23, 50);
+		LocalDate localdate2 = LocalDate.now();
+		LocalDateTime date2 = LocalDateTime.of(localdate2, time2);
+
 		City city2 = new City("City2");
 		cityDao.save(city2);
 		Cinema cinema2 = new Cinema("cinema2", city2);
@@ -324,7 +330,7 @@ public class BillboardServiceTest {
 		roomDao.save(room2);
 		Movie movie2 = new Movie("movie2", "summary", 5);
 		movieDao.save(movie2);
-		Session session2 = new Session(movie2, room2, date2, new BigDecimal(5), room1.getCapacity());
+		Session session2 = new Session(movie2, room2, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		BillboardItem<Session> billboardItem2 = new BillboardItem<>(session2.getMovie(), new ArrayList<>());

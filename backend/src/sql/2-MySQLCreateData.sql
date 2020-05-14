@@ -54,15 +54,15 @@ Cecilia suspect his death was fake. With lethal events occurring around\
 her, she must somehow prove she’s being stalked by a vicious, invisible\
 man.", 140);  
 
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (2, 2, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 4.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 4.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (1, 4, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 3.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (1, 5, DATE_ADD(DATE(NOW()), INTERVAL '0 17:55' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (2, 6, DATE_ADD(DATE(NOW()), INTERVAL '1 15:05' DAY_MINUTE), 4.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (3, 7, DATE_ADD(DATE(NOW()), INTERVAL '2 20::05' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (1, 8, DATE_ADD(DATE(NOW()), INTERVAL '3 10:05' DAY_MINUTE), 3.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (4, 9, DATE_ADD(DATE(NOW()), INTERVAL '4 18:05' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (2, 10, DATE_ADD(DATE(NOW()), INTERVAL '5 19:05' DAY_MINUTE), 5.99, remainingTickets, version);
-INSERT INTO Session (movieId, roomId, date, price, remainingTickets, version) VALUE (1, 11, DATE_ADD(DATE(NOW()), INTERVAL '5 20:05' DAY_MINUTE), 5.99, remainingTickets, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 2, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 4.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 4.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 4, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 3.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 5, DATE_ADD(DATE(NOW()), INTERVAL '0 17:55' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 6, DATE_ADD(DATE(NOW()), INTERVAL '1 15:05' DAY_MINUTE), 4.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (3, 7, DATE_ADD(DATE(NOW()), INTERVAL '2 20::05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 8, DATE_ADD(DATE(NOW()), INTERVAL '3 10:05' DAY_MINUTE), 3.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (4, 9, DATE_ADD(DATE(NOW()), INTERVAL '4 18:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 10, DATE_ADD(DATE(NOW()), INTERVAL '5 19:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 11, DATE_ADD(DATE(NOW()), INTERVAL '5 20:05' DAY_MINUTE), 5.99, ticketsPurchased, version);

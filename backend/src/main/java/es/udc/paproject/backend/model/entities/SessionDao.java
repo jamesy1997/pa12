@@ -14,4 +14,7 @@ public interface SessionDao extends PagingAndSortingRepository<Session, Long> {
 	public List<Session> getTodaysSessionByDateOrderByMovieTitle(LocalDateTime startDate, LocalDateTime endDate,
 			Long cinemaId);
 
+	@Query("SELECT (s.room.capacity - ?2) AS remainingTickets FROM Session s WHERE s.id = ?1 ")
+	public Integer getRemainingTickets(Long sessionId, Integer ticketsPurchased);
+
 }

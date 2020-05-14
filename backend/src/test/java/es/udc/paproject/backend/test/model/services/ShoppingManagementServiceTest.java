@@ -96,16 +96,22 @@ public class ShoppingManagementServiceTest {
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
 		User user1 = signUpUser("user1");
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
-		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 5, 123456789, user1.getId());
+		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 10, 123456789, user1.getId());
 
-		assertEquals(95, session1.getRemainingTickets());
+		assertEquals(10, session1.getTicketsPurchased());
 		assertEquals(100, purchase.getSession().getRoom().getCapacity());
 		assertEquals(session1, purchase.getSession());
 		assertEquals(user1, purchase.getUser());
 		assertFalse(purchase.isPickedUp());
+
+		shoppingManagementService.buyTickets(session1.getId(), 30, 123456789, user1.getId());
+		assertEquals(40, session1.getTicketsPurchased());
+
+		shoppingManagementService.buyTickets(session1.getId(), 40, 123456789, user1.getId());
+		assertEquals(80, session1.getTicketsPurchased());
 
 		LocalDateTime date2 = LocalDateTime.of(2019, 03, 03, 11, 25);
 		City city2 = new City("City2");
@@ -117,7 +123,7 @@ public class ShoppingManagementServiceTest {
 		Movie movie2 = new Movie("movie2", "summary", 120);
 		movieDao.save(movie2);
 		User user2 = signUpUser("user2");
-		Session session2 = new Session(movie2, room2, date2, new BigDecimal(5), room2.getCapacity());
+		Session session2 = new Session(movie2, room2, date2, new BigDecimal(5), 0);
 		sessionDao.save(session2);
 
 		assertThrows(ExpiratedSessionException.class,
@@ -133,11 +139,13 @@ public class ShoppingManagementServiceTest {
 		Movie movie3 = new Movie("movie3", "summary", 120);
 		movieDao.save(movie3);
 		User user3 = signUpUser("user3");
-		Session session3 = new Session(movie3, room3, date3, new BigDecimal(5), room3.getCapacity());
+		Session session3 = new Session(movie3, room3, date3, new BigDecimal(5), 0);
 		sessionDao.save(session3);
 
+		shoppingManagementService.buyTickets(session3.getId(), 10, 123456789, user3.getId());
+
 		assertThrows(NotEnoughTicketsException.class,
-				() -> shoppingManagementService.buyTickets(session3.getId(), 105, 123456789, user3.getId()));
+				() -> shoppingManagementService.buyTickets(session3.getId(), 111, 123456789, user3.getId()));
 	}
 
 	@Test
@@ -162,7 +170,7 @@ public class ShoppingManagementServiceTest {
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
 		User user1 = signUpUser("user1");
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 10, 12345, user1.getId());
@@ -187,7 +195,7 @@ public class ShoppingManagementServiceTest {
 		movieDao.save(movie1);
 		User user1 = signUpUser("user1");
 		user1.setRole(RoleType.TICKETOFFICER);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 		assertThrows(InstanceNotFoundException.class, () -> shoppingManagementService.deliverTickets(-1L, 123));
 	}
@@ -207,7 +215,7 @@ public class ShoppingManagementServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, user1.getId());
@@ -236,7 +244,7 @@ public class ShoppingManagementServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 000, user1.getId());
@@ -260,7 +268,7 @@ public class ShoppingManagementServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, user1.getId());
@@ -287,7 +295,7 @@ public class ShoppingManagementServiceTest {
 		roomDao.save(room1);
 		Movie movie1 = new Movie("movie1", "summary", 120);
 		movieDao.save(movie1);
-		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), room1.getCapacity());
+		Session session1 = new Session(movie1, room1, date1, new BigDecimal(5), 0);
 		sessionDao.save(session1);
 
 		Purchase purchase = shoppingManagementService.buyTickets(session1.getId(), 3, 123, user1.getId());

@@ -46,17 +46,18 @@ public class ShoppingManagementServiceImpl implements ShoppingManagementService 
 		}
 
 		Session session = optSession.get();
+		Integer remainingTickets = sessionDao.getRemainingTickets(session.getId(), session.getTicketsPurchased());
 
 		if (session.getDate().isBefore(LocalDateTime.now())) {
 			throw new ExpiratedSessionException(session.getId());
 		}
 
-		if ((tickets > session.getRemainingTickets())) {
+		if (remainingTickets < tickets) {
 			throw new NotEnoughTicketsException(tickets);
 		}
 
 		Purchase purchase = new Purchase(session, tickets, creditCard, LocalDateTime.now(), false, user);
-		session.setRemainingTickets(session.getRemainingTickets() - tickets);
+		session.setTicketsPurchased(session.getTicketsPurchased() + tickets);
 		purchase = purchaseDao.save(purchase);
 		return purchase;
 	}

@@ -20,19 +20,19 @@ public class Session {
 	private Room room;
 	private LocalDateTime date;
 	private BigDecimal price;
-	private Integer remainingTickets;
+	private Integer ticketsPurchased;
 	private long version;
 
 	public Session() {
 	}
 
-	public Session(Movie movie, Room room, LocalDateTime date, BigDecimal price, Integer remainingTickets) {
+	public Session(Movie movie, Room room, LocalDateTime date, BigDecimal price, Integer ticketsPurchased) {
 
 		this.movie = movie;
 		this.room = room;
 		this.date = date;
 		this.price = price;
-		this.remainingTickets = remainingTickets;
+		this.ticketsPurchased = ticketsPurchased;
 
 	}
 
@@ -82,12 +82,12 @@ public class Session {
 		this.price = price;
 	}
 
-	public Integer getRemainingTickets() {
-		return remainingTickets;
+	public Integer getTicketsPurchased() {
+		return ticketsPurchased;
 	}
 
-	public void setRemainingTickets(Integer remainingTickets) {
-		this.remainingTickets = remainingTickets;
+	public void setTicketsPurchased(Integer ticketsPurchased) {
+		this.ticketsPurchased = ticketsPurchased;
 	}
 
 	@Version

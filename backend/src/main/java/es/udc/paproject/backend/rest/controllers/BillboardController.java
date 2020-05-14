@@ -116,11 +116,10 @@ public class BillboardController {
 	}
 
 	@GetMapping("/sessions/{sessionId}")
-	public SessionDto findSessionDetail(@PathVariable Long sessionId,
-			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime)
+	public SessionDto findSessionDetail(@PathVariable Long sessionId)
 			throws SessionNotFoundException, ExpiratedSessionException {
 
-		return toSessionDto(billboardService.findSessionDetail(sessionId, localDateTime));
+		return toSessionDto(billboardService.findSessionDetail(sessionId, LocalDateTime.now()));
 	}
 
 }
