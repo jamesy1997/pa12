@@ -1,5 +1,5 @@
 import {config, appFetch} from './appFetch';
 
-export const getBillboard = (date, cinemaId, onSuccess) => {
-    appFetch(`/billboard/sessions?date=${date}&cinemaId=${cinemaId}`, config('GET'), onSuccess)
+export const getBillboard = (date,onSuccess) => {
+    appFetch(`/billboard/sessions?date=${date}&cinemaId=1`, config('GET'), onSuccess)
 }

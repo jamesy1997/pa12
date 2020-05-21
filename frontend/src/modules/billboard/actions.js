@@ -1,11 +1,12 @@
 import * as actionTypes from './actionTypes';
 import backend from '../../backend';
 
-export const getBillboardCompleted = (movies, billboardDate) => ({
-    type: actionTypes.GET_BILLBOARD_COMPLETED
+export const getBillboardCompleted = movies => ({
+    type: actionTypes.GET_BILLBOARD_COMPLETED,
+    movies
 });
 
-export const getBillboard = billboardDate => dispatch => {
-    backend.billboardService.getBillboard(billboardDate,
-        result => dispatch(getBillboardCompleted(billboardDate, result)))
+export const getBillboard = date => dispatch => {
+    backend.billboardService.getBillboard(date,
+        movies => dispatch(getBillboardCompleted(movies)))
 };
