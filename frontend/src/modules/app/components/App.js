@@ -8,6 +8,7 @@ import Footer from './Footer';
 import users from '../../users';
 import billboard from '../../billboard';
 
+
 const App = () => {
 
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const App = () => {
             () => dispatch(users.actions.logout())));
         
         
-        dispatch(billboard.actions.getBillboard('2020-05-22'));
+        dispatch(billboard.actions.getBillboard(null));
     
     });
 

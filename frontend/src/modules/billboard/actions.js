@@ -1,16 +1,16 @@
 import * as actionTypes from './actionTypes';
 import backend from '../../backend';
 
-export const getBillboardCompleted = movies => ({
+export const getBillboardCompleted = (movies, billboardDate) => ({
     type: actionTypes.GET_BILLBOARD_COMPLETED,
-    movies
+    movies,
+    billboardDate
 });
 
-export const getBillboard = date => dispatch => {
-    backend.billboardService.getBillboard(date,
-        movies => dispatch(getBillboardCompleted(movies)))
+export const getBillboard = billboardDate => dispatch => {
+    backend.billboardService.getBillboard(billboardDate,
+        movies => dispatch(getBillboardCompleted(movies,billboardDate)))
 };
-
 export const findMovieByIdCompleted = movies => ({
     type: actionTypes.GET_MOVIE_BY_ID_COMPLETED,
     movies
@@ -24,3 +24,5 @@ export const findMovieById = id => dispatch => {
 export const clearMovie = () => ({
     type: actionTypes.CLEAR_MOVIE
 });
+
+

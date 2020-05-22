@@ -102,7 +102,7 @@ public class BillboardController {
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
 			@RequestParam Long cinemaId) throws InstanceNotFoundException, DateNotAllowedException {
 
-		if (date == null)
+		if (date.equals(null))
 			date = LocalDate.now();
 		List<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinemaId);
 

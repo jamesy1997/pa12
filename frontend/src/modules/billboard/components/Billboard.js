@@ -11,13 +11,14 @@ const Billboard = () => {
     const billboardDate = useSelector(selectors.getBillboardDate);
     const movies = useSelector(selectors.getMovies);
     
-    /*<DateSelector id="billboardDate" className="custom-select my-2 mr-ms-2"
-            value={billboardDate}
-            onChange={e=> dispatch(actions.getBillboard(e.target.value))}
-            /> */
+    
     return (
         
         <div>
+        <DateSelector id="billboardDate" className="custom-select my-2 mr-ms-2"
+            value={billboardDate}
+            onChange={e=> dispatch(actions.getBillboard(e.target.value))}/>
+            
         <Movies movies = {movies} />
         </div>
     );

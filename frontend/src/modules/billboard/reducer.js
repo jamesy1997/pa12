@@ -2,8 +2,8 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    movies: null
-    //billboardDate: null
+    movies: null,
+    billboardDate: null
 };
 
 const movies = (state = initialState.movies, action) => {
@@ -26,7 +26,7 @@ const movies = (state = initialState.movies, action) => {
 
 }
 
-/*const billboardDate = (state = initialState.billboardDate, action) => {
+const billboardDate = (state = initialState.billboardDate, action) => {
     switch (action.type) {
 
         case actionTypes.GET_BILLBOARD_COMPLETED:
@@ -37,12 +37,12 @@ const movies = (state = initialState.movies, action) => {
 
     }
 
-}*/
+}
 
 
 const reducer = combineReducers({
-    movies
-    //billboardDate
+    movies,
+    billboardDate
     
 });
 

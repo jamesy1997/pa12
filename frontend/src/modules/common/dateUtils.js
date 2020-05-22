@@ -1,4 +1,3 @@
-
 export const addDaysToDate = (date, days) => {
     let newDate = new Date(date);
     newDate.setDate(date.getDate() + days);
