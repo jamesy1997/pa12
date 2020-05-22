@@ -13,6 +13,12 @@ const movies = (state = initialState.movies, action) => {
         case actionTypes.GET_BILLBOARD_COMPLETED:
             return action.movies;
 
+        case actionTypes.GET_MOVIE_BY_ID_COMPLETED:
+            return action.movies;
+        
+        case actionTypes.CLEAR_MOVIE: 
+            return initialState.movies;
+
         default:
             return state;
 

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 
+import {MovieLink} from '../../common';
+
 
 
 const Movies = ({movies}) => {
@@ -15,7 +17,10 @@ const Movies = ({movies}) => {
             <thead>
                 <tr>
                     <th scope="col">
-                        <FormattedMessage id='project.global.fields.name'/>
+                        <FormattedMessage id='project.global.fields.title'/>
+                    </th>
+                    <th scope="col">
+                        <FormattedMessage id='project.global.fields.movieDetail'/>
                     </th>
                 </tr>
             </thead>
@@ -26,6 +31,7 @@ const Movies = ({movies}) => {
                     <p className="card-text">
                         {movie.movieTitle}
                     </p>
+                    <td><MovieLink id = {movie.movieId} name = {movie.movieTitle}/></td>
                 </tr>
                 )}
             </tbody>

@@ -18,7 +18,7 @@ const App = () => {
             () => dispatch(users.actions.logout())));
         
         
-        dispatch(billboard.actions.getBillboard('2020-05-21'));
+        dispatch(billboard.actions.getBillboard('2020-05-22'));
     
     });
 
