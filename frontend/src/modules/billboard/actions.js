@@ -4,8 +4,8 @@ import backend from '../../backend';
 export const getBillboardCompleted = (movies, billboardDate, sessions) => ({
     type: actionTypes.GET_BILLBOARD_COMPLETED,
     movies,
-    billboardDate, 
-    sessions
+    billboardDate,
+    
 });
 
 export const getBillboard = (billboardDate, sessions) => dispatch => {

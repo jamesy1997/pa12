@@ -45,6 +45,9 @@ const movies = (state = initialState.movies, action) => {
 
 }
 
+
+
+
 const billboardDate = (state = initialState.billboardDate, action) => {
     switch (action.type) {
 
@@ -63,6 +66,7 @@ const reducer = combineReducers({
     movies,
     billboardDate,
     sessions
+    
     
 });
 

@@ -20,9 +20,11 @@ const Movies = ({movies}) => {
                     <th scope="col">
                         <FormattedMessage id='project.global.fields.title'/>
                     </th>
+
                     <th scope="col">
                         <FormattedMessage id='project.global.fields.sessions'/>
                     </th>
+
                 </tr>
             </thead>
 
