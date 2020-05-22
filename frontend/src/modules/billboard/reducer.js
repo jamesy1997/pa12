@@ -3,8 +3,27 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     movies: null,
-    billboardDate: null
+    billboardDate: null,
+    sessions: null
 };
+
+const sessions = (state = initialState.sessions, action) => {
+    switch (action.type) {
+
+        case actionTypes.GET_BILLBOARD_COMPLETED:
+            return action.billboardDate;
+            
+        case actionTypes.GET_SESSION_BY_ID_COMPLETED:
+            return action.sessions;
+        
+        case actionTypes.CLEAR_SESSION:
+            return initialState.sessions;
+
+        default:
+            return state;    
+
+    }
+}
 
 const movies = (state = initialState.movies, action) => {
 
@@ -42,7 +61,8 @@ const billboardDate = (state = initialState.billboardDate, action) => {
 
 const reducer = combineReducers({
     movies,
-    billboardDate
+    billboardDate,
+    sessions
     
 });
 

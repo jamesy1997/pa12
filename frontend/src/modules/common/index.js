@@ -9,3 +9,4 @@ export {default as Pager} from "./components/Pager";
 export {default as BackLink} from "./components/BackLink";
 export default {dateUtils};
 export {default as MovieLink} from "./components/MovieLink";
+export {default as SessionLink} from "./components/SessionLink";
