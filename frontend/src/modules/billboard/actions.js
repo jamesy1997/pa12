@@ -4,7 +4,8 @@ import backend from '../../backend';
 export const getBillboardCompleted = (movies, billboardDate) => ({
     type: actionTypes.GET_BILLBOARD_COMPLETED,
     movies,
-    billboardDate
+    billboardDate,
+    
 });
 
 export const getBillboard = billboardDate => dispatch => {
@@ -24,5 +25,3 @@ export const findMovieById = id => dispatch => {
 export const clearMovie = () => ({
     type: actionTypes.CLEAR_MOVIE
 });
-
-

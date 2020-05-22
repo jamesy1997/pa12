@@ -6,10 +6,12 @@ import DateSelector from './DateSelector';
 import Movies from './Movies';
 
 
+
 const Billboard = () => {
     const dispatch = useDispatch();
     const billboardDate = useSelector(selectors.getBillboardDate);
     const movies = useSelector(selectors.getMovies);
+  
     
     
     return (
@@ -20,6 +22,7 @@ const Billboard = () => {
             onChange={e=> dispatch(actions.getBillboard(e.target.value))}/>
             
         <Movies movies = {movies} />
+        
         </div>
     );
 };

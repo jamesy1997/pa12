@@ -3,7 +3,8 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     movies: null,
-    billboardDate: null
+    billboardDate: null,
+    sessions: null
 };
 
 const movies = (state = initialState.movies, action) => {
@@ -26,6 +27,9 @@ const movies = (state = initialState.movies, action) => {
 
 }
 
+
+
+
 const billboardDate = (state = initialState.billboardDate, action) => {
     switch (action.type) {
 
@@ -43,6 +47,7 @@ const billboardDate = (state = initialState.billboardDate, action) => {
 const reducer = combineReducers({
     movies,
     billboardDate
+    
     
 });
 

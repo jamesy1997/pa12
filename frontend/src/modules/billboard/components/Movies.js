@@ -19,19 +19,21 @@ const Movies = ({movies}) => {
                     <th scope="col">
                         <FormattedMessage id='project.global.fields.title'/>
                     </th>
+
                     <th scope="col">
-                        <FormattedMessage id='project.global.fields.movieDetail'/>
+                        <FormattedMessage id='project.global.fields.sessions'/>
                     </th>
+
                 </tr>
             </thead>
 
             <tbody>
                 {movies.map(movie => 
                     <tr key={movie.movieId}>
-                    <p className="card-text">
-                        {movie.movieTitle}
-                    </p>
                     <td><MovieLink id = {movie.movieId} name = {movie.movieTitle}/></td>
+                    <p className="card-text">
+                        {movie.sessionDate}
+                    </p>
                 </tr>
                 )}
             </tbody>
