@@ -29,10 +29,14 @@ export default {
     'project.global.fields.sessions': 'Sesións',
     'project.global.fields.price': 'Prezo',
     'project.global.fields.capacityLeft': 'Entradas dispoñibles',
+    'project.global.fields.quantity': 'Cantidade',
+    'project.global.fields.creditCard':'Tarxeta de Credito',
+    'project.global.fields.purchaseOrder': 'Orde de compra',
+    'project.shopping.buyTickets':'Comprar',
     'project.global.validator.email': 'Introduzca unha dirección de correo electrónico correcta',
     'project.global.validator.passwordsDoNotMatch': 'As contrasinais non coinciden',
     'project.global.validator.required': 'Campo obrigatorio',
-
+    'project.global.validator.incorrectQuantity':'Cantidade Incorrecta',
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contrasinal nova',
     'project.users.ChangePassword.fields.newPassword': 'Contrasinal nova',
     'project.users.ChangePassword.fields.oldPassword': 'Contrasinal antiga',
@@ -40,6 +44,7 @@ export default {
     'project.users.Login.title': 'Autenticarse',
     'project.users.SignUp.fields.confirmPassword': 'Confirmar contrasinal',
     'project.users.SignUp.title': 'Rexistrarse',
-    'project.users.UpdateProfile.title': 'Actualizar perfil'
+    'project.users.UpdateProfile.title': 'Actualizar perfil',
+    'project.shopping.BuyTickets.title': 'Compra'
 
 }

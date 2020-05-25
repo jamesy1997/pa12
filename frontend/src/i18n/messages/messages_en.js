@@ -29,10 +29,14 @@ export default {
     'project.global.fields.sessions': 'Sessions',
     'project.global.fields.price': 'Price',
     'project.global.fields.capacityLeft': 'Capacity left',
+    'project.global.fields.quantity': 'Quantity',
+    'project.global.fields.creditCard':'Credit Card',
+    'project.global.fields.purchaseOrder': 'Purchase order',
+    'project.shopping.buyTickets':'Buy',
     'project.global.validator.email': 'Provide a correct e-mail address',
     'project.global.validator.passwordsDoNotMatch': 'Passwords do not match',
     'project.global.validator.required': 'Required field',
-
+    'project.global.validator.incorrectQuantity':'Incorrect Quantity',
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirm new password',
     'project.users.ChangePassword.fields.newPassword': 'New password',
     'project.users.ChangePassword.fields.oldPassword': 'Old password',
@@ -40,6 +44,7 @@ export default {
     'project.users.Login.title': 'Login',
     'project.users.SignUp.fields.confirmPassword': 'Confirm password',
     'project.users.SignUp.title': 'Sign up',
-    'project.users.UpdateProfile.title': 'Update profile'
+    'project.users.UpdateProfile.title': 'Update profile',
+    'project.shopping.BuyTickets.title': 'Buy'
 
 }

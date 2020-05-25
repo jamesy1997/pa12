@@ -26,12 +26,16 @@ export default {
     'project.global.fields.duration': 'Duración de la película',
     'project.global.fields.movieDetail': 'Detalle de la película',
     'project.global.fields.title': 'Título',
-    'project.global.fields.sessions': 'Sesiones',
     'project.global.fields.price': 'Precio',
     'project.global.fields.capacityLeft': 'Entradas disponibles',
+    'project.global.fields.quantity': 'Cantidad',
+    'project.global.fields.creditCard':'Tarjeta de Credito',
+    'project.global.fields.purchaseOrder': 'Orden de Compra',
+    'project.shopping.buyTickets':'Comprar',
     'project.global.validator.email': 'Introduzca una dirección de correo electrónico correcta',
     'project.global.validator.passwordsDoNotMatch': 'Las contraseñas no coinciden',
     'project.global.validator.required': 'Campo obligatorio',
+    'project.global.validator.incorrectQuantity':'Cantidad incorrecta',
     'project.global.fields.sessions' : 'Sesiones',
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
@@ -40,6 +44,8 @@ export default {
     'project.users.Login.title': 'Autenticarse',
     'project.users.SignUp.fields.confirmPassword': 'Confirmar contraseña',
     'project.users.SignUp.title': 'Registrarse',
-    'project.users.UpdateProfile.title': 'Actualizar perfil'
+    'project.users.UpdateProfile.title': 'Actualizar perfil',
+    'project.shopping.BuyTickets.title': 'Compra'
+    
 
 }

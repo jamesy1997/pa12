@@ -2,13 +2,16 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {FormattedMessage, FormattedDate, FormattedTime, FormattedNumber} from 'react-intl';
+import users from '../../users';
 
 import * as selectors from '../selectors';
 import * as actions from '../actions';
+import {BuyTickets} from '../../shopping';
 import {BackLink} from '../../common';
 
 const SessionDetails = () => {
 
+    const loggedIn = useSelector(users.selectors.isLoggedIn);
     const session = useSelector(selectors.getSessions);
     const dispatch = useDispatch();
     const {id} = useParams();
@@ -54,6 +57,13 @@ const SessionDetails = () => {
                     </h6>
                 </div>
             </div>
+
+            {loggedIn &&
+                <div>
+                    <br/>
+                    <BuyTickets sessionId={session.id}/>
+                </div>
+            }
 
             
         </div>
