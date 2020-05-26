@@ -45,6 +45,7 @@ export default {
     'project.users.SignUp.fields.confirmPassword': 'Confirmar contrasinal',
     'project.users.SignUp.title': 'Rexistrarse',
     'project.users.UpdateProfile.title': 'Actualizar perfil',
-    'project.shopping.BuyTickets.title': 'Compra'
+    'project.shopping.BuyTickets.title': 'Compra',
+    'project.shopping.ticketsPurchased': '¡Compra exitosa! ID de compra para recoller entradas '
 
 }

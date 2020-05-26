@@ -47,7 +47,7 @@ const SessionDetails = () => {
                         <FormattedMessage id='project.global.fields.price'/>
                         : <FormattedNumber value={session.price}/>€
                     </p>
-                    <p className="card-text font-weight-bold">{session.roomName}</p>
+                    <p className="card-text font-weight-bold">{session.roomName} - {session.cinemaName}</p>
                     <p className="card-text font-weight-bold">
                         <FormattedMessage id='project.global.fields.capacityLeft'/>
                         : <FormattedNumber value={session.capacityLeft}/> 

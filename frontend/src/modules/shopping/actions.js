@@ -6,14 +6,15 @@ const buyCompleted = (orderId) => ({
     orderId
 });
 
-export const buy = (userId,sessionId, quantity, creditCard,
+export const buy = (sessionId, ticket, creditCard,
     onSuccess, onErrors) => dispatch =>
-    backend.shoppingService.buyTickets(userId,sessionId, quantity, creditCard,
-        ({orderId}) => {
-            dispatch(buyCompleted(orderId));
+    backend.shoppingService.buyTickets(sessionId, ticket, creditCard,
+        ({id}) => {
+            dispatch(buyCompleted(id));
             onSuccess();
         },
-        onErrors);
+        onErrors
+);
 
 const findOrdersCompleted = orderSearch => ({
     type: actionTypes.FIND_ORDERS_COMPLETED,

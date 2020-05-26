@@ -45,6 +45,7 @@ export default {
     'project.users.SignUp.fields.confirmPassword': 'Confirm password',
     'project.users.SignUp.title': 'Sign up',
     'project.users.UpdateProfile.title': 'Update profile',
-    'project.shopping.BuyTickets.title': 'Buy'
+    'project.shopping.BuyTickets.title': 'Buy',
+    'project.shopping.ticketsPurchased': 'Purchase made successfully! Purchase ID '
 
 }

@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 
 import * as selectors from '../selectors';
-import OrderLink from './OrderLink';
+import {BackLink} from '../../common';
 
 const PurchaseCompleted = () => {
 
@@ -14,10 +14,12 @@ const PurchaseCompleted = () => {
     }
     
     return (
+        
+
         <div className="alert alert-success" role="alert">
-            <FormattedMessage id="project.shopping.PurchaseCompleted.purchaseOrderGenerated"/>:
-            &nbsp;
-            <OrderLink id={orderId}/>
+            <BackLink/>
+            <FormattedMessage id="project.shopping.ticketsPurchased"/>:  
+            {orderId}
         </div>
     );
 

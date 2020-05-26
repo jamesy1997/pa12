@@ -1,7 +1,7 @@
 import {config, appFetch} from './appFetch';
 
 export const getBillboard = (date,onSuccess) => {
-    appFetch(`/billboard/sessions?date=${date}&cinemaId=2`, config('GET'), onSuccess)
+    appFetch(`/billboard/sessions?date=${date}&cinemaId=3`, config('GET'), onSuccess)
 }
 
 export const findMovieById = (id, onSuccess) => {
@@ -10,4 +10,12 @@ export const findMovieById = (id, onSuccess) => {
 
 export const findSessionById = (id, onSuccess) => {
     appFetch(`/billboard/sessions/${id}`, config('GET'), onSuccess)
+}
+
+export const findCities = (onSuccess) => {
+    appFetch('/billboard/cities', config('GET'), onSuccess)
+}
+
+export const getCinemas = (onSucess) => {
+    appFetch('billboard/cities/1/cinemas', config('GET'), onSucess)
 }

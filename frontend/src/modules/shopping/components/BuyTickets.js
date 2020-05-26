@@ -8,14 +8,13 @@ import {useHistory} from 'react-router-dom';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
-import * as userSelectors from '../../users/selectors';
 
 
 
 const BuyTickets = ({sessionId}) => {
-    const userId = useSelector(userSelectors.getUser);
+    
     const dispatch = useDispatch();
-    const [quantity, setQuantity] = useState(1);
+    const [ticket, setTicket] = useState(1);
     const [backendErrors, setBackendErrors] = useState(null);
     const [creditCard, setCreditCard] = useState('');
     const history = useHistory();
@@ -29,7 +28,7 @@ const BuyTickets = ({sessionId}) => {
 
         if (form.checkValidity()) {
 
-            dispatch(actions.buy(userId,sessionId, quantity,
+            dispatch(actions.buy(sessionId, ticket,
                 creditCard, 
                 () => history.push('/shopping/purchase-completed'),
                 errors => setBackendErrors(errors)));
@@ -54,13 +53,13 @@ const BuyTickets = ({sessionId}) => {
                         className="needs-validation" noValidate
                         onSubmit={(e) => handleSubmit(e)}>
                         <div className="form-group row">
-                            <label htmlFor="quantity" className="offset-md-0 col-md-3 col-form-label">
+                            <label htmlFor="ticket" className="offset-md-0 col-md-3 col-form-label">
                                 <FormattedMessage id="project.global.fields.quantity"/>
                             </label>
                             <div className="col-md-2">
-                                <input type="number" id="quantity" className="form-control"
-                                    value={quantity}
-                                    onChange={e => setQuantity(Number(e.target.value))}
+                                <input type="number" id="ticket" className="form-control"
+                                    value={ticket}
+                                    onChange={e => setTicket(Number(e.target.value))}
                                     autoFocus
                                     min="1" 
                                     max="10"
@@ -76,6 +75,7 @@ const BuyTickets = ({sessionId}) => {
                             </label>
                             <div className="col-md-4">
                                 <input type="text" id="creditCard" className="form-control"
+                                    minlength="8" maxlength="16"
                                     value={creditCard}
                                     onChange={e => setCreditCard(e.target.value)}
                                     required/>
