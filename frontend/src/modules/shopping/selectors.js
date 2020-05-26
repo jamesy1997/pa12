@@ -8,3 +8,4 @@ export const getLastOrderId = state =>
 
 export const getOrderSearch = state =>
     getModuleState(state).orderSearch;
+    

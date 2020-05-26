@@ -5,29 +5,31 @@ import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
 
 
+
 import {Errors} from '../../common';
 import * as actions from '../actions';
-import * as selectors from '../../billboard/selectors';
+import * as userSelectors from '../../users/selectors';
 
 
 
-const BuyTickets = () => {
-
-    const session = useSelector(selectors.getSessions);
+const BuyTickets = ({sessionId}) => {
+    const userId = useSelector(userSelectors.getUser);
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
     const [backendErrors, setBackendErrors] = useState(null);
     const [creditCard, setCreditCard] = useState('');
     const history = useHistory();
+    
     let form;
 
+    
     const handleSubmit = event => {
 
         event.preventDefault();
 
         if (form.checkValidity()) {
 
-            dispatch(actions.buy(session.id, quantity,
+            dispatch(actions.buy(userId,sessionId, quantity,
                 creditCard, 
                 () => history.push('/shopping/purchase-completed'),
                 errors => setBackendErrors(errors)));
@@ -52,7 +54,7 @@ const BuyTickets = () => {
                         className="needs-validation" noValidate
                         onSubmit={(e) => handleSubmit(e)}>
                         <div className="form-group row">
-                            <label htmlFor="quantity" className="offset-md-5 col-md-1 col-form-label">
+                            <label htmlFor="quantity" className="offset-md-0 col-md-3 col-form-label">
                                 <FormattedMessage id="project.global.fields.quantity"/>
                             </label>
                             <div className="col-md-2">
@@ -62,7 +64,7 @@ const BuyTickets = () => {
                                     autoFocus
                                     min="1" 
                                     max="10"
-                                />
+                                    required/>
                                 <div className="invalid-feedback">
                                     <FormattedMessage id='project.global.validator.incorrectQuantity'/>
                                 </div>
@@ -73,7 +75,7 @@ const BuyTickets = () => {
                                 <FormattedMessage id="project.global.fields.creditCard"/>
                             </label>
                             <div className="col-md-4">
-                                <input type="number" id="creditCard" className="form-control"
+                                <input type="text" id="creditCard" className="form-control"
                                     value={creditCard}
                                     onChange={e => setCreditCard(e.target.value)}
                                     required/>
@@ -82,7 +84,7 @@ const BuyTickets = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="form-group row">
+                       <div className="form-group row">
                             <div className="offset-md-6 col-md-2">
                                 <button type="submit" className="btn btn-primary">
                                     <FormattedMessage id='project.shopping.buyTickets'/>

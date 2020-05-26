@@ -61,7 +61,7 @@ const SessionDetails = () => {
             {loggedIn &&
                 <div>
                     <br/>
-                    <BuyTickets sessionId={session.id}/>
+                    <BuyTickets sessionId={id}/>
                 </div>
             }
 

@@ -4,10 +4,10 @@ import {config, appFetch} from './appFetch';
 	appFetch(`/shopping/deliverTickets/${purchaseId}`, 
 	config('POST', purchaseId, creditCard), onSuccess);*/
 
-export const buyTickets = (sessionId, quantity, creditCard, onSuccess, 
+export const buyTickets = (userId,sessionId, quantity, creditCard, onSuccess, 
     onErrors) =>
-    appFetch(`/buyTickets/${sessionId}`, 
-        config('POST', {quantity, creditCard}), onSuccess, onErrors);
+    appFetch(`/shopping/buyTickets/${sessionId}/buy`, 
+        config('POST', {userId,quantity,creditCard}), onSuccess, onErrors);
 
 export const findOrders = ({page}, onSuccess) => 
     appFetch(`/shopping/purchases?page=${page}`, config('GET'), onSuccess);

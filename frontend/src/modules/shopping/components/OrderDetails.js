@@ -6,17 +6,18 @@ import {useParams} from 'react-router-dom';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import {BackLink} from '../../common';
+import SessionDetails from '../../billboard';
 
 const OrderDetails = () => {
 
     const {id} = useParams();
-    const order = useSelector(selectors.getOrder);
+    const order = useSelector(selectors.getOrderSearch);
     const dispatch = useDispatch();
 
     useEffect(() => {
 
         if (!Number.isNaN(id)) {   
-            dispatch(actions.findOrder(id));
+            dispatch(actions.findOrders(id));
         }
 
         return () => dispatch(actions.clearOrder());
