@@ -10,12 +10,13 @@ public class SessionDto {
 	private Long date;
 	private String roomName;
 	private Integer capacityLeft;
+	private String cinemaName;
 
 	public SessionDto() {
 	}
 
 	public SessionDto(String movieTitle, Integer duration, BigDecimal price, Long date, String roomName,
-			Integer capacityLeft) {
+			Integer capacityLeft, String cinemaName) {
 
 		this.movieTitle = movieTitle;
 		this.duration = duration;
@@ -23,6 +24,7 @@ public class SessionDto {
 		this.date = date;
 		this.roomName = roomName;
 		this.capacityLeft = capacityLeft;
+		this.cinemaName = cinemaName;
 	}
 
 	public String getMovieTitle() {
@@ -71,6 +73,14 @@ public class SessionDto {
 
 	public void setCapacityLeft(Integer capacityLeft) {
 		this.capacityLeft = capacityLeft;
+	}
+
+	public String getCinemaName() {
+		return cinemaName;
+	}
+
+	public void setCinemaName(String cinemaName) {
+		this.cinemaName = cinemaName;
 	}
 
 }

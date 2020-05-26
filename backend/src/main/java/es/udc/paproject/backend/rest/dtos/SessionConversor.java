@@ -13,7 +13,8 @@ public class SessionConversor {
 
 		return new SessionDto(session.getMovie().getTitle(), session.getMovie().getDuration(), session.getPrice(),
 				MillisConversor.toMillis(session.getDate()), session.getRoom().getName(),
-				(session.getRoom().getCapacity() - session.getTicketsPurchased()));
+				(session.getRoom().getCapacity() - session.getTicketsPurchased()),
+				session.getRoom().getCinema().getName());
 
 	}
 
