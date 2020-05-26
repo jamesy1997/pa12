@@ -1,13 +1,15 @@
 import {combineReducers} from 'redux';
 
-import users from '../users';
+//import users from '../users';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    session: null
-}
+    //session: null,
+    lastOrderId: null,
+    orderSearch: null
+};
 
-const session = (state = initialState.session, action) => {
+/*const session = (state = initialState.session, action) => {
     switch (action.type) {
 
         case users.actionTypes.LOGIN_COMPLETED:
@@ -23,10 +25,42 @@ const session = (state = initialState.session, action) => {
             return state;
 
     }
+}*/
+const lastOrderId = (state = initialState.lastOrderId, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.BUY_COMPLETED:
+            return action.orderId;
+
+        default:
+            return state;
+
+    }
+
+}
+
+const orderSearch = (state = initialState.orderSearch, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.FIND_ORDERS_COMPLETED:
+            return action.orderSearch;
+
+        case actionTypes.CLEAR_ORDER_SEARCH:
+            return initialState.orderSearch;
+
+        default:
+            return state;
+
+    }
+
 }
 
 const reducer = combineReducers({
-    session
+    //session,
+    lastOrderId,
+    orderSearch
 
 });
 

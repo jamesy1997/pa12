@@ -5,7 +5,6 @@ import {useParams} from 'react-router-dom';
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
-import ShoppingItemList from './ShoppingItemList';
 import {BackLink} from '../../common';
 
 const OrderDetails = () => {
