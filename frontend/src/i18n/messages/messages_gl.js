@@ -46,6 +46,8 @@ export default {
     'project.users.SignUp.title': 'Rexistrarse',
     'project.users.UpdateProfile.title': 'Actualizar perfil',
     'project.shopping.BuyTickets.title': 'Compra',
-    'project.shopping.ticketsPurchased': '¡Compra exitosa! ID de compra para recoller entradas '
+    'project.shopping.ticketsPurchased': '¡Compra exitosa! ID de compra para recoller entradas ',
+    'project.billboard.CitySelector.getCities': 'Cidades',
+    'project.billboard.CinemaSelector.getCinemas': 'Cines'
 
 }

@@ -12,10 +12,10 @@ export const findSessionById = (id, onSuccess) => {
     appFetch(`/billboard/sessions/${id}`, config('GET'), onSuccess)
 }
 
-export const findCities = (onSuccess) => {
-    appFetch('/billboard/cities', config('GET'), onSuccess)
+export const getCities = (onSuccess) => {
+    appFetch(`/billboard/cities`, config('GET'), onSuccess)
 }
 
-export const getCinemas = (onSucess) => {
-    appFetch('billboard/cities/1/cinemas', config('GET'), onSucess)
+export const getCinemas = (onSuccess) => {
+    appFetch(`/billboard/cities/1/cinemas`, config('GET'), onSuccess)
 }

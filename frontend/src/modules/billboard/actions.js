@@ -1,11 +1,12 @@
 import * as actionTypes from './actionTypes';
 import backend from '../../backend';
+import * as selectors from './selectors';
 
 export const getBillboardCompleted = (movies, billboardDate, sessions) => ({
     type: actionTypes.GET_BILLBOARD_COMPLETED,
     movies,
     billboardDate,
-    
+    sessions
 });
 
 export const getBillboard = (billboardDate, sessions) => dispatch => {
@@ -42,3 +43,38 @@ export const clearSession = () => ({
 });
 
 
+export const findCitiesCompleted = cities => ({
+    type: actionTypes.GET_CITIES_COMPLETED, 
+    cities
+});
+
+export const findCities = () => (dispatch, getState) => {
+
+    const cities = selectors.getCities(getState());
+
+    if (!cities) {
+
+        backend.billboardService.getCities(
+            cities => dispatch(findCitiesCompleted(cities))
+        );
+    }
+
+}
+
+export const findCinemasCompleted = cinemas => ({
+    type: actionTypes.GET_CINEMAS_COMPLETED, 
+    cinemas
+});
+
+export const findCinemas = () => (dispatch, getState) => {
+
+    const cinemas = selectors.getCinemas(getState());
+
+    if (!cinemas) {
+
+        backend.billboardService.getCinemas(
+            cinemas => dispatch(findCinemasCompleted(cinemas))
+        );
+    }
+
+}

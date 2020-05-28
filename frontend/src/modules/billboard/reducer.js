@@ -4,7 +4,9 @@ import * as actionTypes from './actionTypes';
 const initialState = {
     movies: null,
     billboardDate: null,
-    sessions: null
+    sessions: null, 
+    cities: null,
+    cinemas:null
 };
 
 const sessions = (state = initialState.sessions, action) => {
@@ -59,13 +61,37 @@ const billboardDate = (state = initialState.billboardDate, action) => {
 
 }
 
+const cities = (state = initialState.cities, action) => {
+    
+    switch(action.type) {
+
+        case actionTypes.GET_CITIES_COMPLETED:
+            return action.cities;
+
+        default:
+            return state;
+    }
+}
+
+const cinemas = (state = initialState.cinemas, action) => {
+    
+    switch(action.type) {
+
+        case actionTypes.GET_CINEMAS_COMPLETED:
+            return action.cinemas;
+
+        default:
+            return state;
+    }
+}
+
 
 const reducer = combineReducers({
     movies,
     billboardDate,
-    sessions
-    
-    
+    sessions,
+    cities,
+    cinemas
 });
 
 export default reducer; 

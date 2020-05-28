@@ -99,11 +99,9 @@ public class BillboardController {
 
 	@GetMapping("/sessions")
 	public List<BillboardItemDto<Long>> showBillboard(
-			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-			@RequestParam Long cinemaId) throws InstanceNotFoundException, DateNotAllowedException {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam Long cinemaId)
+			throws InstanceNotFoundException, DateNotAllowedException {
 
-		if (date.equals(null))
-			date = LocalDate.now();
 		List<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinemaId);
 
 		return new ArrayList<>((toBillboardItemDtos(billboard)));

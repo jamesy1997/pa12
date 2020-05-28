@@ -20,6 +20,10 @@ const App = () => {
         
         dispatch(billboard.actions.getBillboard(null));
 
+        dispatch(billboard.actions.findCities());
+
+        dispatch(billboard.actions.findCinemas());
+
     
     });
 

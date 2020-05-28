@@ -3,3 +3,5 @@ export const GET_MOVIE_BY_ID_COMPLETED = 'project/billboard/findMovieByIdComplet
 export const CLEAR_MOVIE = 'project/billboard/clearMovie'
 export const GET_SESSION_BY_ID_COMPLETED = 'project/billboard/findSessionByIdCompleted'
 export const CLEAR_SESSION = 'project/billboard/clearSession'
+export const GET_CITIES_COMPLETED = 'project/billboard/cities'
+export const GET_CINEMAS_COMPLETED = 'project/billboard/cinemas'

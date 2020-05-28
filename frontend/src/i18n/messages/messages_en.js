@@ -46,6 +46,8 @@ export default {
     'project.users.SignUp.title': 'Sign up',
     'project.users.UpdateProfile.title': 'Update profile',
     'project.shopping.BuyTickets.title': 'Buy',
-    'project.shopping.ticketsPurchased': 'Purchase made successfully! Purchase ID '
+    'project.shopping.ticketsPurchased': 'Purchase made successfully! Purchase ID ',
+    'project.billboard.CitySelector.getCities': 'Cities',
+    'project.billboard.CinemaSelector.getCinemas': 'Cinemas'
 
 }

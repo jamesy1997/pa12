@@ -8,3 +8,9 @@ export const getBillboardDate = state =>
 
 export const getSessions = state => 
     getModuleState(state).sessions;
+
+export const getCities = state =>
+    getModuleState(state).cities;
+
+export const getCinemas = state =>
+    getModuleState(state).cinemas;
