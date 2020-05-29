@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@org.hibernate.annotations.BatchSize(size = 10)
 public class Movie {
 
 	private Long id;

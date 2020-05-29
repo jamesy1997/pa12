@@ -102,6 +102,8 @@ public class BillboardController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam Long cinemaId)
 			throws InstanceNotFoundException, DateNotAllowedException {
 
+		if (date.equals(null))
+			date = LocalDate.now();
 		List<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinemaId);
 
 		return new ArrayList<>((toBillboardItemDtos(billboard)));

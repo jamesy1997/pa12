@@ -48,7 +48,7 @@ public class BillboardServiceImpl implements BillboardService {
 			throws InstanceNotFoundException, DateNotAllowedException {
 
 		List<BillboardItem<Session>> billboard;
-		if (date.equals(null))
+		if (date.equals(null) || date.equals(LocalDate.now()))
 			billboard = findTodaysSessions(LocalDateTime.now(), cinemaId);
 
 		if (date.isAfter(LocalDateTime.now().plusDays(7).toLocalDate())
