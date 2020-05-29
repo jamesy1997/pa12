@@ -28,7 +28,13 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
-                
+
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/shopping/find-orders">
+                            <FormattedMessage id="Historial de Compras"/>
+                        </Link>
+                    </li>
+
                     <li className="nav-item dropdown">
 
                         <a className="dropdown-toggle nav-link" href="/"
