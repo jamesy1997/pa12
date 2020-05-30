@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity
+@org.hibernate.annotations.BatchSize(size = 10)
 public class Session {
 
 	private Long id;
