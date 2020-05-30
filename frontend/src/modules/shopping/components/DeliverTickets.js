@@ -14,7 +14,6 @@ import * as actions from '../actions';
 const DeliverTickets = ({purchaseId}) => {
     
     const dispatch = useDispatch();
-    const [purchaseId, setPurchaseId] = useState('');
     const [backendErrors, setBackendErrors] = useState(null);
     const [creditCard, setCreditCard] = useState('');
     const history = useHistory();
@@ -56,18 +55,6 @@ const DeliverTickets = ({purchaseId}) => {
                             <label htmlFor="purchaseId" className="offset-md-0 col-md-3 col-form-label">
                                 <FormattedMessage id="project.global.fields.quantity"/>
                             </label>
-                            <div className="col-md-2">
-                                <input type="number" id="ticket" className="form-control"
-                                    value={ticket}
-                                    onChange={e => setTicket(Number(e.target.value))}
-                                    autoFocus
-                                    min="1" 
-                                    max="10"
-                                    required/>
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.incorrectQuantity'/>
-                                </div>
-                            </div>
                         </div>
                         <div className="form-group row">
                             <label htmlFor="creditCard" className="col-md-3 col-form-label">
@@ -103,4 +90,4 @@ DeliverTickets.propTypes = {
     sessionId: PropTypes.number.isRequired
 };
 
-export default BuyTickets;
+export default DeliverTickets;
