@@ -24,7 +24,7 @@ public class PurchaseConversor {
 
 	private final static PurchaseSummaryDto toPurchaseSummaryDto(Purchase purchase) {
 
-		return new PurchaseSummaryDto(MillisConversor.toMillis(purchase.getDate()),
+		return new PurchaseSummaryDto(purchase.getId(), MillisConversor.toMillis(purchase.getDate()),
 				purchase.getSession().getMovie().getTitle(), purchase.getTicket(), purchase.getTotalPrice(),
 				MillisConversor.toMillis(purchase.getSession().getDate()),
 				purchase.getSession().getRoom().getCinema().getName());

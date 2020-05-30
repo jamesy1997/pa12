@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class PurchaseSummaryDto {
 
+	private Long id;
 	private Long purchaseDate;
 	private String title;
 	private Integer ticket;
@@ -14,15 +15,24 @@ public class PurchaseSummaryDto {
 	public PurchaseSummaryDto() {
 	}
 
-	public PurchaseSummaryDto(Long purchaseDate, String title, Integer ticket, BigDecimal totalPrice, Long sessionDate,
-			String cinemaName) {
+	public PurchaseSummaryDto(Long id, Long purchaseDate, String title, Integer ticket, BigDecimal totalPrice,
+			Long sessionDate, String cinemaName) {
 
+		this.id = id;
 		this.purchaseDate = purchaseDate;
 		this.title = title;
 		this.ticket = ticket;
 		this.totalPrice = totalPrice;
 		this.sessionDate = sessionDate;
 		this.cinemaName = cinemaName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getPurchaseDate() {
