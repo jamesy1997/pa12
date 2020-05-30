@@ -16,6 +16,21 @@ export const buy = (sessionId, ticket, creditCard,
         onErrors
 );
 
+const deliverCompleted = (purchaseId) => ({
+    type: actionTypes.DELIVER_TICKETS_COMPLETED,
+    purchaseId
+});
+
+export const deliver = (purchaseId, creditCard, 
+    onSuccess, onErrors) => dispatch => 
+    backend.shoppingService.deliverTickets(purchaseId, creditCard,
+        ({id}) => {
+            dispatch(deliverCompleted(id));
+            onSuccess();
+        },
+        onErrors
+);
+
 const findOrdersCompleted = orderSearch => ({
     type: actionTypes.FIND_ORDERS_COMPLETED,
     orderSearch
@@ -23,6 +38,11 @@ const findOrdersCompleted = orderSearch => ({
 
 const clearOrderSearch = () => ({
     type: actionTypes.CLEAR_ORDER_SEARCH
+});
+
+const findOrderCompleted = order => ({
+    type: actionTypes.FIND_ORDER_COMPLETED,
+    order
 });
 
 export const clearOrder = () => ({
@@ -43,5 +63,10 @@ export const previousFindOrdersResultPage = criteria =>
 export const nextFindOrdersResultPage = criteria => 
     findOrders({page: criteria.page+1});
 
+export const findOrder = orderId => dispatch => {
+    backend.shoppingService.findOrder(orderId, order => {
+        dispatch(findOrderCompleted(order));
+    });
+}    
 
        

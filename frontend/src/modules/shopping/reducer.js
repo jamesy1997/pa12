@@ -6,7 +6,8 @@ import * as actionTypes from './actionTypes';
 const initialState = {
     //session: null,
     lastOrderId: null,
-    orderSearch: null
+    orderSearch: null,
+    order: null
 };
 
 /*const session = (state = initialState.session, action) => {
@@ -57,10 +58,28 @@ const orderSearch = (state = initialState.orderSearch, action) => {
 
 }
 
+const order = (state = initialState.order, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.FIND_ORDER_COMPLETED:
+            return action.order;
+
+        case actionTypes.CLEAR_ORDER:
+            return initialState.order;
+
+        default:
+            return state;
+
+    }
+
+}
+
 const reducer = combineReducers({
     //session,
     lastOrderId,
-    orderSearch
+    orderSearch,
+    order
 
 });
 

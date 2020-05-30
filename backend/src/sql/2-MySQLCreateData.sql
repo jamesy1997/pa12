@@ -8,7 +8,7 @@ INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
 	
 INSERT INTO User (userName, password, firstName, lastName, email, role) VALUES
 	("ticketseller", "$2a$10$o4TYmbQ9Uvk3AO9tvRvFgO0OEYXz8Y5bEiCVYpuiTC/CwfBNpVewS", "ticketseller", "tester", "ticketseller.tester@udc.es", 0);
-
+	
 INSERT INTO City (name) VALUES ("A Corunha");
 INSERT INTO City (name) VALUES ("SDC");
 INSERT INTO City (name) VALUES ("Ponferrada");
