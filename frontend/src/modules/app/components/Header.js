@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 
 import users from '../../users';
+import { DeliverTickets } from '../../shopping';
 
 const Header = () => {
 
@@ -28,10 +29,16 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
+                
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/shopping/deliver-tickets-result">
+                            <FormattedMessage id="project.global.buttons.deliverTickets"/>
+                        </Link>
+                    </li>
 
                     <li className="nav-item">
                         <Link className="nav-link" to="/shopping/find-orders">
-                            <FormattedMessage id="Historial de Compras"/>
+                            <FormattedMessage id="project.global.buttons.purchaseHistory"/>
                         </Link>
                     </li>
 

@@ -9,6 +9,7 @@ import users from '../../users';
 import {MovieDetails} from '../../billboard';
 import {SessionDetails} from '../../billboard';
 import {PurchaseCompleted, FindOrders, FindOrdersResult, OrderDetails, BuyTickets, DeliverTickets} from '../../shopping';
+import DeliverTicketsResult from '../../shopping/components/DeliverTicketsResult';
 
 const Body = () => {
 
@@ -23,6 +24,7 @@ const Body = () => {
                 <Route exact path="/"><Home/></Route>
                 <Route exact path="/billboard/movies/:id"><MovieDetails/></Route>
                 <Route exact path="/billboard/sessions/:id"><SessionDetails/></Route>
+                <Route exact path="/shopping/deliver-tickets-result"><DeliverTicketsResult/></Route>
                 {loggedIn && <Route exact path="/shopping/buy"><BuyTickets/></Route>}
                 {loggedIn && <Route exact path="/shopping/purchase-completed"><PurchaseCompleted/></Route>}
                 {loggedIn && <Route exact path="/shopping/find-orders"><FindOrders/></Route>}
