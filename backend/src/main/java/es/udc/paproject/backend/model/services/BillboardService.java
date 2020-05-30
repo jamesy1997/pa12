@@ -19,14 +19,15 @@ public interface BillboardService {
 	List<BillboardItem<Session>> findSessions(LocalDate date, Long cinemaId)
 			throws InstanceNotFoundException, DateNotAllowedException;
 
+	List<BillboardItem<Session>> TodaysBillboard(Long cinemaId) throws InstanceNotFoundException;
+
 	List<City> showCities();
 
 	List<Cinema> showCinemas(Long cityId);
 
-	Movie findMovie(Long movieId) throws MovieNotFoundException;
+	Movie findMovieDetail(Long movieId) throws MovieNotFoundException;
 
 	Session findSessionDetail(Long sessionId, LocalDateTime localDateTime)
 			throws SessionNotFoundException, ExpiratedSessionException;
 
-	Cinema findCinema(Long cinemaId);
 }

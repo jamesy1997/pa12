@@ -98,13 +98,16 @@ public class BillboardController {
 	}
 
 	@GetMapping("/sessions")
-	public List<BillboardItemDto<Long>> showBillboard(
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @RequestParam Long cinemaId)
+	public List<BillboardItemDto<Long>> showBillboard(@RequestParam Long cinemaId,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date)
 			throws InstanceNotFoundException, DateNotAllowedException {
 
-		if (date.equals(null))
-			date = LocalDate.now();
-		List<BillboardItem<Session>> billboard = billboardService.findSessions(date, cinemaId);
+		List<BillboardItem<Session>> billboard;
+		billboard = billboardService.TodaysBillboard(cinemaId);
+
+		if (date != null) {
+			billboard = billboardService.findSessions(date, cinemaId);
+		}
 
 		return new ArrayList<>((toBillboardItemDtos(billboard)));
 	}
@@ -112,7 +115,7 @@ public class BillboardController {
 	@GetMapping("/movies/{movieId}")
 	public MovieDto findMovieDetail(@PathVariable Long movieId) throws MovieNotFoundException {
 
-		return toMovieDto(billboardService.findMovie(movieId));
+		return toMovieDto(billboardService.findMovieDetail(movieId));
 	}
 
 	@GetMapping("/sessions/{sessionId}")

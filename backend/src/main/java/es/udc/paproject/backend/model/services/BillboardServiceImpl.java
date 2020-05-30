@@ -48,8 +48,6 @@ public class BillboardServiceImpl implements BillboardService {
 			throws InstanceNotFoundException, DateNotAllowedException {
 
 		List<BillboardItem<Session>> billboard;
-		if (date.equals(null) || date.equals(LocalDate.now()))
-			billboard = findTodaysSessions(LocalDateTime.now(), cinemaId);
 
 		if (date.isAfter(LocalDateTime.now().plusDays(7).toLocalDate())
 				|| date.isBefore(LocalDateTime.now().toLocalDate())) {
@@ -58,6 +56,14 @@ public class BillboardServiceImpl implements BillboardService {
 
 		LocalDateTime dateNotToday = date.atStartOfDay();
 		billboard = findTodaysSessions(dateNotToday, cinemaId);
+		return billboard;
+	}
+
+	@Override
+	public List<BillboardItem<Session>> TodaysBillboard(Long cinemaId) throws InstanceNotFoundException {
+
+		List<BillboardItem<Session>> billboard;
+		billboard = findTodaysSessions(LocalDateTime.now(), cinemaId);
 		return billboard;
 	}
 
@@ -127,8 +133,9 @@ public class BillboardServiceImpl implements BillboardService {
 	}
 
 	@Override
+
 	@Transactional(readOnly = true)
-	public Movie findMovie(Long movieId) throws MovieNotFoundException {
+	public Movie findMovieDetail(Long movieId) throws MovieNotFoundException {
 
 		Optional<Movie> movie = movieDao.findById(movieId);
 
@@ -160,15 +167,6 @@ public class BillboardServiceImpl implements BillboardService {
 
 			return session.get();
 		}
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Cinema findCinema(Long cinemaId) {
-
-		Optional<Cinema> cinema = cinemaDao.findById(cinemaId);
-
-		return cinema.get();
 	}
 
 }
