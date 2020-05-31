@@ -1,7 +1,7 @@
 import {config, appFetch} from './appFetch';
 
-export const getBillboard = (date,onSuccess) => {
-    //appFetch(`/billboard/sessions?date=${date}&cinemaId=4`, config('GET'), onSuccess)
+export const getBillboard = (date, onSuccess) => {
+
     let path = `/billboard/sessions?cinemaId=2`;
     path += date != null ? `&date=${date}`: "";
     appFetch(path, config('GET'), onSuccess)
