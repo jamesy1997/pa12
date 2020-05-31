@@ -57,8 +57,8 @@ const DeliverTickets = ({}) => {
                                 <FormattedMessage id="project.global.fields.purchaseId"/>
                             </label>
                             <div className="col-md-2">
-                                <input type="text" id="puchaseId" className="form-control"
-                                    minlength="8" maxlength="16"
+                                <input type="number" id="purchaseId" className="form-control"
+                                    minlength="1"
                                     value={purchaseId}
                                     onChange={e => setPurchaseId(e.target.value)}
                                     required/>

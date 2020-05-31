@@ -40,6 +40,7 @@ export default {
     'project.shopping.buyTickets':'Comprar',
     'project.shopping.DeliverTickets.buttons.deliverTickets': 'Entregar Tickets',
     'project.shopping.DeliverTickets.title.ticketsToDeliver': 'Tickets a entregar',
+    'project.shopping.DeliverCompleted.title.DeliverCompleted': 'Entrega Completada',
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contrasinal nova',
     'project.users.ChangePassword.fields.newPassword': 'Contrasinal nova',
     'project.users.ChangePassword.fields.oldPassword': 'Contrasinal antiga',

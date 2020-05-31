@@ -8,6 +8,7 @@ export {default as DeliverTickets} from './components/DeliverTickets';
 export {default as FindOrders} from './components/FindOrders';
 export {default as FindOrdersResult} from './components/FindOrdersResult';
 export {default as PurchaseCompleted} from './components/PurchaseCompleted';
+export {default as DeliverCompleted} from './components/DeliverCompleted';
 
 
 export default {actions, reducer, selectors};

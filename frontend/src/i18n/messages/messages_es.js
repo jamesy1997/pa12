@@ -47,6 +47,7 @@ export default {
     'project.global.fields.sessions' : 'Sesiones',
     'project.shopping.DeliverTickets.buttons.deliver': 'Entregar',
     'project.shopping.DeliverTickets.title.ticketsToDeliver': 'Tickets a entregar',
+    'project.shopping.DeliverCompleted.title.DeliverCompleted': 'Entrega Completada',
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
     'project.users.ChangePassword.fields.oldPassword': 'Contraseña antigua',

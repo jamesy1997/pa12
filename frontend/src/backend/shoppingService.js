@@ -2,7 +2,7 @@ import {config, appFetch} from './appFetch';
 
 export const deliverTickets = (purchaseId, creditCard, onSuccess, onErrors) => 
 	appFetch(`/shopping/deliverTickets/${purchaseId}`, 
-	config('POST', purchaseId, creditCard), onSuccess, onErrors);
+	config('POST', {purchaseId, creditCard}), onSuccess, onErrors);
 
 export const buyTickets = ( sessionId, ticket, creditCard, onSuccess, 
     onErrors) =>
