@@ -9,6 +9,8 @@ import { DeliverTickets } from '../../shopping';
 const Header = () => {
 
     const userName = useSelector(users.selectors.getUserName);
+    const loggedIn = useSelector(users.selectors.isLoggedIn);
+    const user = useSelector(users.selectors.getUser);
 
     return (
 
@@ -29,18 +31,21 @@ const Header = () => {
                 {userName ? 
 
                 <ul className="navbar-nav">
-                
+                    {loggedIn && (user.role == "TICKETOFFICER") &&
                     <li className="nav-item">
                         <Link className="nav-link" to="/shopping/deliver-tickets-result">
                             <FormattedMessage id="project.global.buttons.deliverTickets"/>
                         </Link>
                     </li>
+                    }
 
+                    {loggedIn && (user.role == "SPECTATOR") &&
                     <li className="nav-item">
                         <Link className="nav-link" to="/shopping/find-orders">
                             <FormattedMessage id="project.global.buttons.purchaseHistory"/>
                         </Link>
                     </li>
+                    }
 
                     <li className="nav-item dropdown">
 

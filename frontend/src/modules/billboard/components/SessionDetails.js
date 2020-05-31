@@ -12,6 +12,7 @@ import {BackLink} from '../../common';
 const SessionDetails = () => {
 
     const loggedIn = useSelector(users.selectors.isLoggedIn);
+    const user = useSelector(users.selectors.getUser);
     const session = useSelector(selectors.getSessions);
     const dispatch = useDispatch();
     const {id} = useParams();
@@ -58,7 +59,7 @@ const SessionDetails = () => {
                 </div>
             </div>
 
-            {loggedIn &&
+            {loggedIn && (user.role == "SPECTATOR") &&
                 <div>
                     <br/>
                     <BuyTickets sessionId={id}/>
