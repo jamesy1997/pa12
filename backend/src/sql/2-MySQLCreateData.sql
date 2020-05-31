@@ -57,7 +57,6 @@ man.", 140);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 2, DATE_ADD(DATE(NOW()), INTERVAL '0 00:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 4.99, ticketsPurchased, version);
-INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (3, 3, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 4.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 4, DATE_ADD(DATE(NOW()), INTERVAL '0 23:55' DAY_MINUTE), 3.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 5, DATE_ADD(DATE(NOW()), INTERVAL '0 17:55' DAY_MINUTE), 5.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 6, DATE_ADD(DATE(NOW()), INTERVAL '1 15:05' DAY_MINUTE), 4.99, ticketsPurchased, version);
@@ -66,3 +65,16 @@ INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VA
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (4, 9, DATE_ADD(DATE(NOW()), INTERVAL '4 18:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (2, 10, DATE_ADD(DATE(NOW()), INTERVAL '5 19:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
 INSERT INTO Session (movieId, roomId, date, price, ticketsPurchased, version) VALUE (1, 11, DATE_ADD(DATE(NOW()), INTERVAL '5 20:05' DAY_MINUTE), 5.99, ticketsPurchased, version);
+
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (7, 3, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 15:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (8, 4, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 20:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (9, 5, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (10, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 12:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 13:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 2, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (7, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 14:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 10, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 10:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (8, 5, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 18:00' DAY_MINUTE), 0, 123456789);
+INSERT INTO Purchase(sessionId, ticket, userId, date, pickedUp, creditCard) VALUE (6, 1, 1, DATE_ADD(DATE(NOW()), INTERVAL '0 19:00' DAY_MINUTE), 0, 123456789);
